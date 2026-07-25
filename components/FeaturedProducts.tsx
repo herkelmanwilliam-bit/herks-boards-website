@@ -5,11 +5,14 @@ import { Plus } from 'lucide-react'
 import { getFeaturedProducts } from '@/lib/products'
 import { useCart } from '@/lib/cart'
 import toast from 'react-hot-toast'
+import React from 'react'
 
 interface InventoryItem {
   qty: number
   published: boolean
   price?: number
+  image?: string
+  description?: string
 }
 
 type Inventory = Record<string, InventoryItem>
@@ -66,15 +69,20 @@ export default function FeaturedProducts() {
             {featured.map(product => {
               const inv = inventory[product.id]
               const price = inv?.price ?? product.price
+              const displayImage = inv?.image || product.image
+              const displayDesc = inv?.description || product.description
+              
+              const dynamicProduct = { ...product, price, image: displayImage, description: displayDesc }
+
               return (
                 <div key={product.id} className="bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-amber-700/30 transition-all group">
                   <Link href={`/shop/${product.id}`} className="block">
                     <div className="aspect-[4/3] overflow-hidden bg-gray-50 flex items-center justify-center">
-                      {product.image === '/images/placeholder-board.jpg' ? (
+                      {displayImage === '/images/placeholder-board.jpg' ? (
                         <span className="text-gray-400">No Image</span>
                       ) : (
                         <img
-                          src={product.image}
+                          src={displayImage}
                           alt={product.name}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                         />
@@ -86,10 +94,10 @@ export default function FeaturedProducts() {
                       <Link href={`/shop/${product.id}`} className="font-bold text-[#1C1C1C] text-lg hover:text-amber-700 transition-colors">{product.name}</Link>
                       <span className="text-amber-700 font-semibold text-sm ml-2 shrink-0">${price.toFixed(2)}</span>
                     </div>
-                    <p className="text-gray-500 text-sm mb-4 line-clamp-2">{product.description}</p>
+                    <p className="text-gray-500 text-sm mb-4 line-clamp-2">{displayDesc}</p>
                     <button
                       onClick={() => {
-                        addItem(product)
+                        addItem(dynamicProduct)
                         toast.success(`${product.name} added to cart!`)
                       }}
                       className="w-full flex items-center justify-center gap-2 bg-[#1C1C1C] text-amber-500 py-3 rounded-xl font-semibold hover:bg-amber-700 hover:text-white transition-colors border border-amber-700/30"

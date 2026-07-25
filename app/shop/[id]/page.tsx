@@ -7,7 +7,7 @@ import { Plus, ArrowLeft, Ruler, ShieldCheck, Truck, CheckCircle } from 'lucide-
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 
-interface InventoryItem { qty: number; published: boolean; price?: number }
+interface InventoryItem { qty: number; published: boolean; price?: number; image?: string; description?: string }
 
 const productDescriptions: Record<string, { tagline: string; story: string; highlights: string[]; specs: string }> = {
   'board-standard-8x12': {
@@ -77,9 +77,13 @@ export default function ProductPage() {
   const inStock = !inventory || (inventory.published && (inventory.qty === -1 || inventory.qty > 0))
   const lowStock = inventory && inventory.qty !== -1 && inventory.qty > 0 && inventory.qty <= 5
 
+  const displayImage = inventory?.image || product.image
+  const displayDesc = inventory?.description || desc.story
+  const dynamicProduct = { ...product, price, image: displayImage, description: displayDesc }
+
   function handleAddToCart() {
     if (!product) return
-    for (let i = 0; i < qty; i++) addItem(product)
+    for (let i = 0; i < qty; i++) addItem(dynamicProduct)
     toast.success(`${qty}x ${product.name} added to cart!`)
   }
 
@@ -102,11 +106,11 @@ export default function ProductPage() {
           {/* Image */}
           <div className="relative">
             <div className="aspect-square rounded-3xl overflow-hidden bg-gray-100 shadow-md flex items-center justify-center">
-              {product.image === '/images/placeholder-board.jpg' ? (
+              {displayImage === '/images/placeholder-board.jpg' ? (
                 <span className="text-gray-400">No Image</span>
               ) : (
                 <img
-                  src={product.image}
+                  src={displayImage}
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />
@@ -179,7 +183,7 @@ export default function ProductPage() {
                 <div key={i} className="flex items-start gap-2 bg-white rounded-xl p-3 shadow-sm border border-gray-50">
                   <CheckCircle className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
                   <span className="text-sm text-gray-600">{h}</span>
-                </div>
+            </div>
               ))}
             </div>
           </div>
@@ -188,7 +192,7 @@ export default function ProductPage() {
         {/* Story section */}
         <div className="mt-16 max-w-3xl">
           <h2 className="text-2xl font-bold text-[#1C1C1C] mb-4">About This Board</h2>
-          <p className="text-gray-600 leading-relaxed text-lg">{desc.story}</p>
+          <p className="text-gray-600 leading-relaxed text-lg whitespace-pre-wrap">{displayDesc}</p>
         </div>
 
         {/* Board icons */}

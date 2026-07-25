@@ -10,6 +10,8 @@ interface InventoryItem {
   qty: number
   published: boolean
   price?: number
+  image?: string
+  description?: string
 }
 
 type Inventory = Record<string, InventoryItem>
@@ -85,15 +87,21 @@ export default function ShopPage() {
             const inStock = isInStock(inv)
             const lowStock = inv && inv.qty !== -1 && inv.qty > 0 && inv.qty <= 5
 
+            const price = inv?.price ?? product.price
+            const displayImage = inv?.image || product.image
+            const displayDesc = inv?.description || product.description
+            
+            const dynamicProduct = { ...product, price, image: displayImage, description: displayDesc }
+
             return (
               <div key={product.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-amber-500/30 border border-transparent transition-all">
                 <Link href={`/shop/${product.id}`} className="block">
                   <div className="aspect-[4/3] overflow-hidden bg-gray-100 relative flex items-center justify-center">
-                    {product.image === '/images/placeholder-board.jpg' ? (
+                    {displayImage === '/images/placeholder-board.jpg' ? (
                       <span className="text-gray-400">No Image</span>
                     ) : (
                       <img
-                        src={product.image}
+                        src={displayImage}
                         alt={product.name}
                         className={`w-full h-full object-cover hover:scale-105 transition-transform duration-300 ${!inStock ? 'opacity-50' : ''}`}
                       />
@@ -118,10 +126,10 @@ export default function ShopPage() {
                   <div className="flex justify-between items-start mb-1">
                     <Link href={`/shop/${product.id}`} className="font-bold text-[#1C1C1C] hover:text-amber-700 transition-colors">{product.name}</Link>
                   </div>
-                  <p className="text-gray-500 text-sm mb-1 line-clamp-2">{product.description}</p>
-                  <p className="text-amber-700 font-semibold text-sm mb-3">${(inv?.price ?? product.price).toFixed(2)}</p>
+                  <p className="text-gray-500 text-sm mb-1 line-clamp-2">{displayDesc}</p>
+                  <p className="text-amber-700 font-semibold text-sm mb-3">${price.toFixed(2)}</p>
                   <button
-                    onClick={() => { addItem(product); toast.success(`${product.name} added!`) }}
+                    onClick={() => { addItem(dynamicProduct); toast.success(`${product.name} added!`) }}
                     disabled={!inStock}
                     className="w-full flex items-center justify-center gap-2 bg-[#1C1C1C] text-amber-500 py-2.5 rounded-xl text-sm font-semibold hover:bg-amber-700 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed border border-amber-700/30"
                   >

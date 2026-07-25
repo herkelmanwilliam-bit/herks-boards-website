@@ -1,17 +1,21 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { products } from '@/lib/products'
+import { Image as ImageIcon } from 'lucide-react'
 
 interface InventoryItem {
   qty: number
   published: boolean
   price?: number
+  image?: string
+  description?: string
 }
 
 type Inventory = Record<string, InventoryItem>
 
 export default function AdminPage() {
   const [authed, setAuthed] = useState(false)
+  const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [loginError, setLoginError] = useState('')
   const [inventory, setInventory] = useState<Inventory>({})
@@ -21,6 +25,7 @@ export default function AdminPage() {
   const [priceInputs, setPriceInputs] = useState<Record<string, string>>({})
   const [testEmailStatus, setTestEmailStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [testEmailMsg, setTestEmailMsg] = useState('')
+  const [expandedRow, setExpandedRow] = useState<string | null>(null)
 
   async function sendTestEmail() {
     setTestEmailStatus('sending')
@@ -48,13 +53,13 @@ export default function AdminPage() {
     const res = await fetch('/api/admin/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ password }),
+      body: JSON.stringify({ username, password }),
     })
     if (res.ok) {
       setAuthed(true)
       loadInventory()
     } else {
-      setLoginError('Wrong password.')
+      setLoginError('Invalid username or password.')
     }
   }
 
@@ -103,10 +108,43 @@ export default function AdminPage() {
     setSaving(null)
   }
 
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>, productId: string) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+      const img = new window.Image()
+      img.onload = () => {
+        const canvas = document.createElement('canvas')
+        const MAX_WIDTH = 1000
+        const MAX_HEIGHT = 1000
+        let width = img.width
+        let height = img.height
+        if (width > height) {
+          if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+        } else {
+          if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
+        }
+        canvas.width = width
+        canvas.height = height
+        const ctx = canvas.getContext('2d')
+        ctx?.drawImage(img, 0, 0, width, height)
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.8)
+        setInventory(prev => ({
+          ...prev,
+          [productId]: { ...getItem(productId), image: dataUrl }
+        }))
+      }
+      img.src = ev.target?.result as string
+    }
+    reader.readAsDataURL(file)
+  }
+
   async function handleLogout() {
     await fetch('/api/admin/logout', { method: 'POST' })
     setAuthed(false)
     setInventory({})
+    setUsername('')
     setPassword('')
   }
 
@@ -121,12 +159,19 @@ export default function AdminPage() {
           </div>
           <form onSubmit={handleLogin} className="flex flex-col gap-4">
             <input
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              className="bg-[#1C1C1C] text-white border border-amber-500/30 rounded-xl px-4 py-3 focus:outline-none focus:border-amber-500"
+              autoFocus
+            />
+            <input
               type="password"
-              placeholder="Admin password"
+              placeholder="Password"
               value={password}
               onChange={e => setPassword(e.target.value)}
               className="bg-[#1C1C1C] text-white border border-amber-500/30 rounded-xl px-4 py-3 focus:outline-none focus:border-amber-500"
-              autoFocus
             />
             {loginError && <p className="text-red-400 text-sm">{loginError}</p>}
             <button
@@ -250,99 +295,143 @@ export default function AdminPage() {
                         <th className="text-left px-5 py-3 text-sm font-semibold text-gray-600 w-36">Quantity</th>
                         <th className="text-left px-5 py-3 text-sm font-semibold text-gray-600 w-32">Price</th>
                         <th className="text-left px-5 py-3 text-sm font-semibold text-gray-600 w-28">Visible</th>
-                        <th className="text-left px-5 py-3 text-sm font-semibold text-gray-600 w-24">Status</th>
-                        <th className="px-5 py-3 w-24"></th>
+                        <th className="px-5 py-3 w-48"></th>
                       </tr>
                     </thead>
                     <tbody>
                       {catProducts.map((product, i) => {
                         const item = getItem(product.id)
                         const inStock = item.published && (item.qty === -1 || item.qty > 0)
+                        const displayImage = item.image || product.image
+                        
                         return (
-                          <tr key={product.id} className={`border-b border-gray-50 last:border-0 ${i % 2 === 0 ? '' : 'bg-gray-50/50'}`}>
-                            <td className="px-5 py-3">
-                              {product.image === '/images/placeholder-board.jpg' ? (
-                                <div className="w-8 h-8 rounded-lg bg-gray-200" />
-                              ) : (
-                                <img src={product.image} alt="" className="w-8 h-8 rounded-lg object-cover" />
-                              )}
-                            </td>
-                            <td className="px-5 py-3">
-                              <p className="font-medium text-[#1C1C1C] text-sm">{product.name}</p>
-                              <p className="text-gray-400 text-xs">${product.price} / {product.unit}</p>
-                            </td>
-                            <td className="px-5 py-3">
-                              <div className="flex items-center gap-2">
-                                <input
-                                  type="number"
-                                  min={-1}
-                                  value={item.qty}
-                                  onChange={e => setInventory(prev => ({
-                                    ...prev,
-                                    [product.id]: { ...getItem(product.id), qty: parseInt(e.target.value) || 0 }
-                                  }))}
-                                  className="w-20 border border-gray-200 rounded-lg px-2 py-1.5 text-sm text-center focus:outline-none focus:border-amber-500"
-                                />
-                                <span className="text-gray-400 text-xs">{item.qty === -1 ? '∞' : ''}</span>
-                              </div>
-                              <p className="text-gray-400 text-xs mt-1">-1 = unlimited</p>
-                            </td>
-                            <td className="px-5 py-3">
-                              <div className="flex items-center gap-1">
-                                <span className="text-gray-400 text-sm">$</span>
-                                <input
-                                  type="text"
-                                  inputMode="decimal"
-                                  value={priceInputs[product.id] ?? String(item.price ?? product.price)}
-                                  onChange={e => setPriceInputs(prev => ({ ...prev, [product.id]: e.target.value }))}
-                                  onBlur={e => {
-                                    const parsed = parseFloat(e.target.value)
-                                    if (isNaN(parsed)) {
-                                      setPriceInputs(prev => ({ ...prev, [product.id]: String(item.price ?? product.price) }))
-                                    }
-                                  }}
-                                  className="w-20 border border-gray-200 rounded-lg px-2 py-1.5 text-sm text-center focus:outline-none focus:border-amber-500"
-                                />
-                              </div>
-                              <p className="text-gray-400 text-xs mt-1">per {product.unit}</p>
-                            </td>
-                            <td className="px-5 py-3">
-                              <label className="flex items-center gap-2 cursor-pointer">
-                                <div
-                                  onClick={() => setInventory(prev => ({
-                                    ...prev,
-                                    [product.id]: { ...getItem(product.id), published: !item.published }
-                                  }))}
-                                  className={`w-10 h-6 rounded-full transition-colors relative cursor-pointer ${item.published ? 'bg-amber-500' : 'bg-gray-300'}`}
-                                >
-                                  <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${item.published ? 'translate-x-5' : 'translate-x-1'}`} />
+                          <React.Fragment key={product.id}>
+                            <tr className={`border-b border-gray-50 last:border-0 ${i % 2 === 0 ? '' : 'bg-gray-50/50'}`}>
+                              <td className="px-5 py-3">
+                                {displayImage === '/images/placeholder-board.jpg' ? (
+                                  <div className="w-8 h-8 rounded-lg bg-gray-200" />
+                                ) : (
+                                  <img src={displayImage} alt="" className="w-8 h-8 rounded-lg object-cover" />
+                                )}
+                              </td>
+                              <td className="px-5 py-3">
+                                <p className="font-medium text-[#1C1C1C] text-sm">{product.name}</p>
+                                <p className="text-gray-400 text-xs">${product.price} / {product.unit}</p>
+                              </td>
+                              <td className="px-5 py-3">
+                                <div className="flex items-center gap-2">
+                                  <input
+                                    type="number"
+                                    min={-1}
+                                    value={item.qty}
+                                    onChange={e => setInventory(prev => ({
+                                      ...prev,
+                                      [product.id]: { ...getItem(product.id), qty: parseInt(e.target.value) || 0 }
+                                    }))}
+                                    className="w-20 border border-gray-200 rounded-lg px-2 py-1.5 text-sm text-center focus:outline-none focus:border-amber-500"
+                                  />
+                                  <span className="text-gray-400 text-xs">{item.qty === -1 ? '∞' : ''}</span>
                                 </div>
-                                <span className="text-sm text-gray-600">{item.published ? 'On' : 'Off'}</span>
-                              </label>
-                            </td>
-                            <td className="px-5 py-3">
-                              <span className={`inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full ${
-                                inStock
-                                  ? 'bg-green-100 text-green-700'
-                                  : 'bg-red-100 text-red-600'
-                              }`}>
-                                {inStock ? '✓ In Stock' : '✕ Sold Out'}
-                              </span>
-                            </td>
-                            <td className="px-5 py-3 text-right">
-                              {saved === product.id ? (
-                                <span className="text-green-600 text-sm font-medium">✅ Saved</span>
-                              ) : (
+                                <p className="text-gray-400 text-xs mt-1">-1 = unlimited</p>
+                              </td>
+                              <td className="px-5 py-3">
+                                <div className="flex items-center gap-1">
+                                  <span className="text-gray-400 text-sm">$</span>
+                                  <input
+                                    type="text"
+                                    inputMode="decimal"
+                                    value={priceInputs[product.id] ?? String(item.price ?? product.price)}
+                                    onChange={e => setPriceInputs(prev => ({ ...prev, [product.id]: e.target.value }))}
+                                    onBlur={e => {
+                                      const parsed = parseFloat(e.target.value)
+                                      if (isNaN(parsed)) {
+                                        setPriceInputs(prev => ({ ...prev, [product.id]: String(item.price ?? product.price) }))
+                                      }
+                                    }}
+                                    className="w-20 border border-gray-200 rounded-lg px-2 py-1.5 text-sm text-center focus:outline-none focus:border-amber-500"
+                                  />
+                                </div>
+                                <p className="text-gray-400 text-xs mt-1">per {product.unit}</p>
+                              </td>
+                              <td className="px-5 py-3">
+                                <label className="flex items-center gap-2 cursor-pointer">
+                                  <div
+                                    onClick={() => setInventory(prev => ({
+                                      ...prev,
+                                      [product.id]: { ...getItem(product.id), published: !item.published }
+                                    }))}
+                                    className={`w-10 h-6 rounded-full transition-colors relative cursor-pointer ${item.published ? 'bg-amber-500' : 'bg-gray-300'}`}
+                                  >
+                                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${item.published ? 'translate-x-5' : 'translate-x-1'}`} />
+                                  </div>
+                                  <span className="text-sm text-gray-600">{item.published ? 'On' : 'Off'}</span>
+                                </label>
+                              </td>
+                              <td className="px-5 py-3 text-right">
                                 <button
-                                  onClick={() => saveItem(product.id, getItem(product.id), product.price)}
-                                  disabled={saving === product.id}
-                                  className="bg-[#1C1C1C] text-amber-500 text-sm font-semibold px-4 py-1.5 rounded-lg hover:bg-amber-600 hover:text-white transition-colors disabled:opacity-50"
+                                  onClick={() => setExpandedRow(expandedRow === product.id ? null : product.id)}
+                                  className="text-gray-500 text-sm font-semibold hover:text-amber-600 mr-4"
                                 >
-                                  {saving === product.id ? '...' : 'Save'}
+                                  {expandedRow === product.id ? 'Close' : 'Edit Info'}
                                 </button>
-                              )}
-                            </td>
-                          </tr>
+                                {saved === product.id ? (
+                                  <span className="text-green-600 text-sm font-medium">✅ Saved</span>
+                                ) : (
+                                  <button
+                                    onClick={() => saveItem(product.id, getItem(product.id), product.price)}
+                                    disabled={saving === product.id}
+                                    className="bg-[#1C1C1C] text-amber-500 text-sm font-semibold px-4 py-1.5 rounded-lg hover:bg-amber-600 hover:text-white transition-colors disabled:opacity-50"
+                                  >
+                                    {saving === product.id ? '...' : 'Save'}
+                                  </button>
+                                )}
+                              </td>
+                            </tr>
+                            
+                            {/* Expanded Row for Image & Description Upload */}
+                            {expandedRow === product.id && (
+                              <tr className="bg-amber-50/30 border-b border-gray-100">
+                                <td colSpan={6} className="px-8 py-6">
+                                  <div className="grid md:grid-cols-2 gap-8">
+                                    <div>
+                                      <label className="block text-sm font-bold text-gray-700 mb-2">Product Description</label>
+                                      <textarea
+                                        rows={4}
+                                        value={item.description ?? product.description}
+                                        onChange={e => setInventory(prev => ({
+                                          ...prev,
+                                          [product.id]: { ...getItem(product.id), description: e.target.value }
+                                        }))}
+                                        className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:border-amber-500"
+                                      />
+                                      <p className="text-xs text-gray-500 mt-2">This overrides the default description shown on the shop page.</p>
+                                    </div>
+                                    <div>
+                                      <label className="block text-sm font-bold text-gray-700 mb-2">Product Photo</label>
+                                      <div className="flex items-start gap-4">
+                                        <div className="w-24 h-24 border border-gray-200 rounded-lg overflow-hidden flex-shrink-0 bg-white flex items-center justify-center">
+                                          {displayImage === '/images/placeholder-board.jpg' ? (
+                                            <ImageIcon className="w-8 h-8 text-gray-300" />
+                                          ) : (
+                                            <img src={displayImage} alt="Preview" className="w-full h-full object-cover" />
+                                          )}
+                                        </div>
+                                        <div className="flex-1">
+                                          <input 
+                                            type="file" 
+                                            accept="image/*"
+                                            onChange={(e) => handleImageUpload(e, product.id)}
+                                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 cursor-pointer"
+                                          />
+                                          <p className="text-xs text-gray-500 mt-2">Upload a photo from your phone or computer. The image will be compressed automatically before saving.</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </td>
+                              </tr>
+                            )}
+                          </React.Fragment>
                         )
                       })}
                     </tbody>
