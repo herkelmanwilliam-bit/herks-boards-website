@@ -1,42 +1,46 @@
 import Link from 'next/link'
+import { ArrowRight } from 'lucide-react'
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[85vh] flex items-center bg-[#0f172a] overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0f172a] to-slate-900"></div>
-      
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 flex flex-col lg:flex-row items-center justify-between">
+    <section className="relative w-full">
+      <div className="flex flex-col lg:flex-row min-h-[90vh]">
         
-        <div className="w-full lg:w-1/2 pr-0 lg:pr-12 text-center lg:text-left">
-          <div className="inline-block border border-slate-700 text-slate-400 text-xs tracking-[0.3em] px-5 py-2 mb-10">
-            CRAFTED IN IOWA, USA
+        <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 lg:px-20 py-24 bg-[#f8fafc]">
+          <div className="mb-8">
+            <span className="inline-block text-[10px] font-bold tracking-[0.3em] text-slate-400 border border-slate-300 px-3 py-1 uppercase">
+              Established 2024
+            </span>
           </div>
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif text-white leading-tight mb-8">
-            Mastercraft<br />
-            <span className="text-slate-400 italic font-light">Woodworking</span>
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif text-[#0f172a] leading-[1.1] mb-8">
+            Precision.<br />
+            Patience.<br />
+            <span className="italic text-slate-500 font-light">Perfection.</span>
           </h1>
-          <div className="h-px w-24 bg-slate-700 mb-8 mx-auto lg:mx-0"></div>
-          <p className="text-lg text-slate-400 mb-14 font-light leading-relaxed max-w-lg mx-auto lg:mx-0">
-            Heirloom-quality edge-grain cutting boards, decorative plaques, and bespoke custom builds forged by hand. Built to endure generations.
+          <p className="text-lg text-slate-600 font-light leading-relaxed max-w-md mb-12">
+            Heirloom-quality edge-grain cutting boards, bespoke decorative plaques, and custom commissions forged by hand in Iowa. Built to endure generations of use.
           </p>
-          <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start">
-            <Link href="/shop" className="bg-white text-[#0f172a] px-8 py-4 text-xs tracking-[0.2em] font-bold hover:bg-slate-200 transition-colors text-center border border-white">
-              EXPLORE COLLECTION
+          <div className="flex flex-col sm:flex-row gap-6">
+            <Link href="/shop" className="group flex items-center justify-center gap-3 bg-[#0f172a] text-white px-8 py-5 text-xs tracking-[0.2em] font-bold hover:bg-slate-800 transition-all w-fit">
+              SHOP BOARDS
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
-            <Link href="/custom-order" className="bg-transparent border border-slate-600 text-slate-300 px-8 py-4 text-xs tracking-[0.2em] font-bold hover:bg-slate-800 transition-colors text-center">
+            <Link href="/custom-order" className="flex items-center justify-center border-b-2 border-slate-300 text-slate-500 px-4 py-4 text-xs tracking-[0.2em] font-bold hover:text-[#0f172a] hover:border-[#0f172a] transition-all w-fit">
               COMMISSION A BUILD
             </Link>
           </div>
         </div>
 
-        <div className="w-full lg:w-1/2 mt-20 lg:mt-0 hidden md:block">
-          <div className="relative w-full aspect-[4/5] bg-slate-900 border border-slate-800 flex items-center justify-center p-8">
-            <div className="w-full h-full border border-slate-700 relative flex items-center justify-center bg-[#0f172a] shadow-2xl">
-              <div className="absolute inset-4 border border-slate-800/50"></div>
-              <div className="text-slate-600 font-serif italic text-2xl">HB</div>
+        <div className="w-full lg:w-1/2 bg-[#0f172a] relative flex items-center justify-center p-12 min-h-[50vh]">
+          <div className="relative w-full max-w-md aspect-[3/4] border border-slate-800 bg-[#1e293b] shadow-2xl flex flex-col items-center justify-center p-8 overflow-hidden">
+            <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(45deg, #334155 25%, transparent 25%, transparent 75%, #334155 75%, #334155), linear-gradient(45deg, #334155 25%, transparent 25%, transparent 75%, #334155 75%, #334155)', backgroundSize: '20px 20px', backgroundPosition: '0 0, 10px 10px' }}></div>
+            <div className="w-full h-full border border-slate-600 flex items-center justify-center bg-[#0f172a] z-10">
+              <span className="font-serif italic text-4xl text-slate-500">HB</span>
             </div>
-            <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-slate-800 -z-10"></div>
-            <div className="absolute top-1/2 -right-4 w-24 h-px bg-slate-600"></div>
+          </div>
+          
+          <div className="absolute bottom-10 right-10 text-right text-slate-600 text-[10px] tracking-[0.4em] font-medium hidden lg:block uppercase">
+            Iowa, USA<br />Mastercraft
           </div>
         </div>
 
