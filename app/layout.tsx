@@ -5,16 +5,16 @@ import Footer from '@/components/Footer'
 import { Toaster } from 'react-hot-toast'
 
 export const metadata: Metadata = {
-  title: 'Herk\'s Boards | Custom Woodworking & Cutting Boards',
-  description: 'Handcrafted cutting boards, custom woodworking, and decorative wooden plaques.',
-  keywords: 'custom cutting boards, handmade cutting boards, woodworking, Herks Boards',
+  title: 'Herk\'s Boards | Custom Woodworking & Cutting Boards in Waterloo, IA',
+  description: 'Handcrafted cutting boards, custom woodworking, and decorative wooden plaques. Built by hand in Waterloo, Iowa.',
+  keywords: 'custom cutting boards, handmade cutting boards, woodworking, Herks Boards, Waterloo IA, Iowa woodworking, end grain cutting boards, bespoke woodworking',
   icons: {
     icon: '/favicon-32.png',
     apple: '/favicon-192.png',
   },
   openGraph: {
-    title: 'Herk\'s Boards | Custom Woodworking',
-    description: 'Handcrafted cutting boards, custom woodworking, and decorative wooden plaques.',
+    title: 'Herk\'s Boards | Custom Woodworking in Waterloo, IA',
+    description: 'Handcrafted cutting boards, custom woodworking, and decorative wooden plaques built in Iowa.',
     url: 'https://www.herksboards.com',
     siteName: 'Herk\'s Boards',
     locale: 'en_US',
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Herk\'s Boards | Custom Woodworking',
-    description: 'Handcrafted cutting boards, custom woodworking, and decorative wooden plaques.',
+    title: 'Herk\'s Boards | Custom Woodworking in Waterloo, IA',
+    description: 'Handcrafted cutting boards, custom woodworking, and decorative wooden plaques built in Iowa.',
   },
 }
 
@@ -37,7 +37,19 @@ export default function RootLayout({
     '@type': 'LocalBusiness',
     name: 'Herk\'s Boards',
     url: 'https://www.herksboards.com',
-    description: 'Handcrafted cutting boards, custom woodworking, and decorative wooden plaques.',
+    description: 'Handcrafted custom cutting boards, decorative state plaques, and bespoke woodworking.',
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Waterloo',
+      addressRegion: 'IA',
+      postalCode: '50701',
+      addressCountry: 'US'
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 42.4928,
+      longitude: -92.3426
+    },
     priceRange: '$$',
     sameAs: ['https://www.instagram.com/herksboards/'],
   }

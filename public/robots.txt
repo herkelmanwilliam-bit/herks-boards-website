@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.ggfarmsmn.com/sitemap.xml
+Sitemap: https://www.herksboards.com/sitemap.xml
