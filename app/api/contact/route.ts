@@ -14,7 +14,7 @@ export async function POST(req: Request) {
       to: ['info@herksboards.com', 'sherkelman@gmail.com'],
       subject: `New Contact Form Message from ${name}`,
       text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
-      reply_to: email
+      replyTo: email
     })
 
     return NextResponse.json({ ok: true })

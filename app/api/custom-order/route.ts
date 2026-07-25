@@ -27,7 +27,7 @@ Budget: ${budget || 'Not specified'}
 --- PROJECT DESCRIPTION ---
 ${details}
       `.trim(),
-      reply_to: email
+      replyTo: email
     })
 
     return NextResponse.json({ ok: true })
