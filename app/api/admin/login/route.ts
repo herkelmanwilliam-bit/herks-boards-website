@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server'
-import { validatePassword, createSessionToken, COOKIE_NAME, COOKIE_MAX_AGE } from '@/lib/auth'
+import { validateCredentials, createSessionToken, COOKIE_NAME, COOKIE_MAX_AGE } from '@/lib/auth'
 
 export async function POST(req: Request) {
-  const { password } = await req.json()
+  const { username, password } = await req.json()
 
-  if (!validatePassword(password)) {
-    return NextResponse.json({ error: 'Invalid password' }, { status: 401 })
+  if (!validateCredentials(username, password)) {
+    return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 })
   }
 
   const token = createSessionToken(password)

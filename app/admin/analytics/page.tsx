@@ -31,7 +31,7 @@ const PERIODS: { key: Period; label: string }[] = [
   { key: 'all', label: 'All Time' },
 ]
 
-function fmt(cents: number) { return \`$\${(cents / 100).toFixed(2)}\` }
+function fmt(cents: number) { return `$${(cents / 100).toFixed(2)}` }
 function fmtMonth(key: string) {
   const [y, m] = key.split('-')
   return new Date(parseInt(y), parseInt(m) - 1).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })

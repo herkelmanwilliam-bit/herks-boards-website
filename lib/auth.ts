@@ -12,10 +12,10 @@ function signToken(password: string): string {
   return createHmac('sha256', getSecret()).update(password).digest('hex')
 }
 
-export function validatePassword(password: string): boolean {
-  const expected = process.env.ADMIN_PASSWORD
-  if (!expected) return false
-  return password === expected
+export function validateCredentials(username: string, pass: string): boolean {
+  const expectedU = process.env.ADMIN_USERNAME || 'wherk'
+  const expectedP = process.env.ADMIN_PASSWORD || 'Abbyrules'
+  return username === expectedU && pass === expectedP
 }
 
 export function createSessionToken(password: string): string {
@@ -23,9 +23,8 @@ export function createSessionToken(password: string): string {
 }
 
 export function isValidToken(token: string): boolean {
-  const password = process.env.ADMIN_PASSWORD
-  if (!password) return false
-  const expected = signToken(password)
+  const expectedP = process.env.ADMIN_PASSWORD || 'Abbyrules'
+  const expected = signToken(expectedP)
   return token === expected
 }
 

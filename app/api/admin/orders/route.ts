@@ -55,7 +55,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
   }
 
-  const id = stripeSessionId || \`manual_\${Date.now()}_\${Math.random().toString(36).slice(2, 8)}\`
+  const id = stripeSessionId || `manual_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`
 
   const order = await saveOrder({
     id,

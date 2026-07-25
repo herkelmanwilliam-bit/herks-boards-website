@@ -11,6 +11,8 @@ export interface InventoryItem {
   qty: number       // -1 = unlimited/always in stock, 0 = sold out, N = N remaining
   published: boolean // false = hidden from shop
   price?: number    // optional price override; if absent, uses products.ts default
+  image?: string
+  description?: string
 }
 
 const KEY = (id: string) => `inv:${id}`

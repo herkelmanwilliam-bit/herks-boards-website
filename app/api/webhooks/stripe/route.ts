@@ -41,7 +41,7 @@ export async function POST(req: Request) {
   try {
     event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!)
   } catch (err: any) {
-    return NextResponse.json({ error: \`Webhook Error: \${err.message}\` }, { status: 400 })
+    return NextResponse.json({ error: `Webhook Error: ${err.message}` }, { status: 400 })
   }
 
   if (event.type === 'checkout.session.completed') {
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
     const shipping = fullSession.shipping_details?.address
 
     const formattedAddress = shipping 
-      ? \`\${shipping.line1}\${shipping.line2 ? ' ' + shipping.line2 : ''}, \${shipping.city}, \${shipping.state} \${shipping.postal_code}\`
+      ? `${shipping.line1}${shipping.line2 ? ' ' + shipping.line2 : ''}, ${shipping.city}, ${shipping.state} ${shipping.postal_code}`
       : 'No shipping address provided'
 
     for (const item of lineItems) {
