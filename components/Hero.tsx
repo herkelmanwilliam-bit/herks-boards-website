@@ -34,8 +34,8 @@ export default function Hero() {
         <div className="w-full lg:w-1/2 bg-[#0f172a] relative flex items-center justify-center p-12 min-h-[50vh]">
           <div className="relative w-full max-w-md aspect-[3/4] border border-slate-800 bg-[#1e293b] shadow-2xl flex flex-col items-center justify-center p-8 overflow-hidden">
             <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'linear-gradient(45deg, #334155 25%, transparent 25%, transparent 75%, #334155 75%, #334155), linear-gradient(45deg, #334155 25%, transparent 25%, transparent 75%, #334155 75%, #334155)', backgroundSize: '20px 20px', backgroundPosition: '0 0, 10px 10px' }}></div>
-            <div className="w-full h-full border border-slate-600 flex items-center justify-center bg-[#0f172a] z-10">
-              <span className="font-serif italic text-4xl text-slate-500">HB</span>
+            <div className="w-full h-full border border-slate-600 flex items-center justify-center bg-[#f8fafc] z-10 p-8 shadow-inner">
+              <img src="/images/logo.jpg" alt="Herk's Boards Logo" className="w-full h-full object-contain mix-blend-multiply" />
             </div>
           </div>
           
