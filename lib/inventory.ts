@@ -8,14 +8,18 @@ function getRedis(): Redis | null {
 }
 
 export interface InventoryItem {
-  qty: number       // -1 = unlimited/always in stock, 0 = sold out, N = N remaining
-  published: boolean // false = hidden from shop
-  price?: number    // optional price override; if absent, uses products.ts default
+  qty: number
+  published: boolean
+  price?: number
   image?: string
   description?: string
+  name?: string
+  category?: string
+  isDynamic?: boolean
 }
 
 const KEY = (id: string) => `inv:${id}`
+const DYNAMIC_SET = 'products:dynamic'
 
 export async function getInventory(productId: string): Promise<InventoryItem> {
   const redis = getRedis()
@@ -28,28 +32,48 @@ export async function getInventory(productId: string): Promise<InventoryItem> {
   }
 }
 
-export async function getAllInventory(productIds: string[]): Promise<Record<string, InventoryItem>> {
+export async function getAllInventory(staticProductIds: string[] = []): Promise<Record<string, InventoryItem>> {
   const redis = getRedis()
   if (!redis) {
-    return Object.fromEntries(productIds.map(id => [id, { qty: -1, published: true }]))
+    return Object.fromEntries(staticProductIds.map(id => [id, { qty: -1, published: true }]))
   }
   try {
-    const entries = await Promise.all(
-      productIds.map(async (id) => {
-        const inv = await getInventory(id)
-        return [id, inv] as [string, InventoryItem]
-      })
-    )
+    const dynamicIds = await redis.smembers(DYNAMIC_SET) || []
+    const allIds = Array.from(new Set([...staticProductIds, ...dynamicIds]))
+    
+    if (allIds.length === 0) return {}
+
+    const pipeline = redis.pipeline()
+    for (const id of allIds) {
+      pipeline.get(KEY(id))
+    }
+    const results = await pipeline.exec()
+    
+    const entries = allIds.map((id, index) => {
+      const inv = results[index] as InventoryItem | null
+      return [id, inv ?? { qty: -1, published: true }]
+    })
     return Object.fromEntries(entries)
-  } catch {
-    return Object.fromEntries(productIds.map(id => [id, { qty: -1, published: true }]))
+  } catch (e) {
+    console.error(e)
+    return Object.fromEntries(staticProductIds.map(id => [id, { qty: -1, published: true }]))
   }
 }
 
 export async function setInventory(productId: string, item: InventoryItem): Promise<void> {
   const redis = getRedis()
-  if (!redis) throw new Error('Redis not configured — set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN')
+  if (!redis) throw new Error('Redis not configured')
   await redis.set(KEY(productId), item)
+  if (item.isDynamic) {
+    await redis.sadd(DYNAMIC_SET, productId)
+  }
+}
+
+export async function deleteDynamicProduct(productId: string): Promise<void> {
+  const redis = getRedis()
+  if (!redis) return
+  await redis.del(KEY(productId))
+  await redis.srem(DYNAMIC_SET, productId)
 }
 
 export async function batchSetInventory(updates: Record<string, InventoryItem>): Promise<void> {
@@ -60,7 +84,7 @@ export async function batchSetInventory(updates: Record<string, InventoryItem>):
 
 export async function decrementInventory(productId: string, qty: number): Promise<void> {
   const current = await getInventory(productId)
-  if (current.qty === -1) return // unlimited — no decrement needed
+  if (current.qty === -1) return
   const newQty = Math.max(0, current.qty - qty)
   await setInventory(productId, { ...current, qty: newQty })
 }

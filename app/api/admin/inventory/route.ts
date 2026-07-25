@@ -1,7 +1,9 @@
 import { NextResponse } from 'next/server'
 import { getAdminSession } from '@/lib/auth'
-import { getAllInventory, setInventory, batchSetInventory, InventoryItem } from '@/lib/inventory'
+import { getAllInventory, setInventory, batchSetInventory, InventoryItem, deleteDynamicProduct } from '@/lib/inventory'
 import { products } from '@/lib/products'
+
+export const dynamic = 'force-dynamic'
 
 async function checkAuth() {
   const ok = await getAdminSession()
@@ -9,7 +11,6 @@ async function checkAuth() {
   return null
 }
 
-// GET — fetch all inventory for the admin panel
 export async function GET() {
   const authError = await checkAuth()
   if (authError) return authError
@@ -19,12 +20,11 @@ export async function GET() {
   return NextResponse.json(inventory)
 }
 
-// POST — update a single product's inventory
 export async function POST(req: Request) {
   const authError = await checkAuth()
   if (authError) return authError
 
-  const { productId, qty, published, price, image, description } = await req.json()
+  const { productId, qty, published, price, image, description, name, category, isDynamic } = await req.json()
   if (!productId) return NextResponse.json({ error: 'Missing productId' }, { status: 400 })
 
   const item: InventoryItem = {
@@ -33,18 +33,23 @@ export async function POST(req: Request) {
     ...(price !== undefined && !isNaN(Number(price)) ? { price: Number(price) } : {}),
     ...(image !== undefined ? { image } : {}),
     ...(description !== undefined ? { description } : {}),
+    ...(name !== undefined ? { name } : {}),
+    ...(category !== undefined ? { category } : {}),
+    ...(isDynamic !== undefined ? { isDynamic } : {}),
   }
 
   await setInventory(productId, item)
   return NextResponse.json({ ok: true, productId, inventory: item })
 }
 
-// PUT — batch update all inventory at once
-export async function PUT(req: Request) {
+export async function DELETE(req: Request) {
   const authError = await checkAuth()
   if (authError) return authError
+  
+  const { searchParams } = new URL(req.url)
+  const id = searchParams.get('id')
+  if (!id) return NextResponse.json({ error: 'Missing id' }, { status: 400 })
 
-  const updates: Record<string, InventoryItem> = await req.json()
-  await batchSetInventory(updates)
-  return NextResponse.json({ ok: true, updated: Object.keys(updates).length })
+  await deleteDynamicProduct(id)
+  return NextResponse.json({ ok: true })
 }

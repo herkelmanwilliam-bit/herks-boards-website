@@ -1,53 +1,25 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
-import { getProductById, Product } from '@/lib/products'
+import { getProductById, Product, products as staticProducts } from '@/lib/products'
 import { useCart } from '@/lib/cart'
 import { Plus, ArrowLeft, Ruler, ShieldCheck, Truck, CheckCircle } from 'lucide-react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 
-interface InventoryItem { qty: number; published: boolean; price?: number; image?: string; description?: string }
-
-const productDescriptions: Record<string, { tagline: string; story: string; highlights: string[]; specs: string }> = {
-  'board-standard-8x12': {
-    tagline: 'The everyday essential.',
-    story: `Our classic 8"x12" cutting board is built for the daily grind. Whether you're slicing fruit for breakfast or chopping herbs for dinner, this board offers a clean, flat surface that protects your knives. Crafted by hand from premium hardwoods, glued with food-safe adhesives, and finished with a blend of mineral oil and beeswax to keep the wood nourished.`,
-    highlights: ['Flat edge-grain surface', 'Protects knife edges', 'Hand-rubbed oil finish', 'Perfect for everyday prep'],
-    specs: '8" x 12" • 3/4" Thick • Solid Hardwood'
-  },
-  'board-juice-groove-8x12': {
-    tagline: 'Keep the mess on the board, not the counter.',
-    story: `Take our classic 8"x12" board and add a precision-routed juice groove around the perimeter. It's the perfect board for resting steaks, carving roasts, or cutting juicy fruits like tomatoes and watermelon. The groove catches the liquids before they spill onto your countertop, making cleanup incredibly simple.`,
-    highlights: ['Deep routed juice groove', 'Keeps counters perfectly clean', 'Great for resting meats', 'Hand-rubbed oil finish'],
-    specs: '8" x 12" • 3/4" Thick • Solid Hardwood'
-  },
-  'board-rubber-feet-8x12': {
-    tagline: 'Maximum stability. Zero sliding.',
-    story: `There is nothing more frustrating (or dangerous) than a cutting board that slips while you're chopping. We've taken our standard 8"x12" board and elevated it with non-slip rubber feet secured with stainless steel screws. The feet anchor the board firmly to your counter, provide clearance underneath to prevent moisture trapping, and make the board easier to pick up.`,
-    highlights: ['Non-slip rubber feet', 'Prevents dangerous sliding', 'Allows air flow underneath', 'Stainless steel hardware'],
-    specs: '8" x 12" • 3/4" Thick • Solid Hardwood'
-  },
-  'board-chamfered-8x12': {
-    tagline: 'Modern lines. Easy lifting.',
-    story: `For a more modern, refined look, we offer our 8"x12" board with chamfered (angled) edges. Not only does the chamfer give the board a striking, floating appearance on your counter, but the angled undercut gives your fingers a natural ledge to easily lift the board off flat surfaces.`,
-    highlights: ['Elegant angled edges', 'Modern "floating" profile', 'Natural finger ledge for lifting', 'Hand-rubbed oil finish'],
-    specs: '8" x 12" • 3/4" Thick • Solid Hardwood'
-  }
-}
+interface InventoryItem { qty: number; published: boolean; price?: number; image?: string; description?: string; name?: string; category?: string; isDynamic?: boolean }
 
 const defaultDescription = {
   tagline: 'Handcrafted custom woodworking.',
-  story: 'Built by hand using premium hardwoods and food-safe finishes.',
   highlights: ['Premium hardwood', 'Handcrafted', 'Built to last'],
-  specs: 'Custom Dimensions'
+  specs: 'Custom Profile'
 }
 
 export default function ProductPage() {
   const params = useParams()
-  const router = useRouter()
   const id = params?.id as string
-  const product = getProductById(id)
+  const staticProduct = getProductById(id)
+  
   const [inventory, setInventory] = useState<InventoryItem | null>(null)
   const [qty, setQty] = useState(1)
   const addItem = useCart(s => s.addItem)
@@ -61,24 +33,38 @@ export default function ProductPage() {
       .catch(() => setInventory({ qty: -1, published: true }))
   }, [id])
 
+  // Merge dynamic product details if it's not a static product
+  const isDynamic = !staticProduct && inventory?.isDynamic;
+  const product = staticProduct || (isDynamic ? {
+    id,
+    name: inventory.name || 'Unnamed Product',
+    category: inventory.category as any,
+    description: inventory.description || '',
+    price: inventory.price || 0,
+    unit: 'each',
+    image: inventory.image || '/images/placeholder-board.jpg',
+    featured: false,
+    inStock: true,
+    details: []
+  } : null)
+
   if (!product) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#f8fafc] flex items-center justify-center">
         <div className="text-center">
-          <p className="text-gray-500 mb-4">Product not found.</p>
-          <Link href="/shop" className="text-slate-600 font-semibold">← Back to Shop</Link>
+          <p className="text-slate-500 mb-6 font-light">This piece is not available.</p>
+          <Link href="/shop" className="border-b border-[#0f172a] text-[#0f172a] text-xs font-bold tracking-widest pb-1">RETURN TO COLLECTION</Link>
         </div>
       </div>
     )
   }
 
-  const desc = productDescriptions[product.id] ?? defaultDescription
   const price = inventory?.price ?? product.price
   const inStock = !inventory || (inventory.published && (inventory.qty === -1 || inventory.qty > 0))
   const lowStock = inventory && inventory.qty !== -1 && inventory.qty > 0 && inventory.qty <= 5
 
   const displayImage = inventory?.image || product.image
-  const displayDesc = inventory?.description || desc.story
+  const displayDesc = inventory?.description || product.description
   const dynamicProduct = { ...product, price, image: displayImage, description: displayDesc }
 
   function handleAddToCart() {
@@ -88,133 +74,107 @@ export default function ProductPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Breadcrumb */}
-      <div className="bg-white border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-2 text-sm text-gray-500">
-          <Link href="/" className="hover:text-slate-600">Home</Link>
+    <div className="min-h-screen bg-white">
+      <div className="border-b border-slate-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center gap-3 text-xs tracking-widest font-bold text-slate-400 uppercase">
+          <Link href="/" className="hover:text-[#0f172a] transition-colors">HOME</Link>
           <span>/</span>
-          <Link href="/shop" className="hover:text-slate-600">Shop</Link>
+          <Link href="/shop" className="hover:text-[#0f172a] transition-colors">SHOP</Link>
           <span>/</span>
-          <span className="text-[#0f172a] font-medium">{product.name}</span>
+          <span className="text-[#0f172a] truncate">{product.name}</span>
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="grid lg:grid-cols-2 gap-16 items-start">
 
           {/* Image */}
           <div className="relative">
-            <div className="aspect-square rounded-sm overflow-hidden bg-gray-100 shadow-md flex items-center justify-center">
+            <div className="aspect-square bg-slate-50 border border-slate-200 flex items-center justify-center p-4">
               {displayImage === '/images/placeholder-board.jpg' ? (
-                <span className="text-gray-400">No Image</span>
+                <span className="text-slate-300 font-serif tracking-widest text-sm">NO IMAGE</span>
               ) : (
-                <img
-                  src={displayImage}
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
+                <img src={displayImage} alt={product.name} className="w-full h-full object-cover shadow-sm" />
               )}
             </div>
             {!inStock && (
-              <div className="absolute inset-0 bg-black/40 rounded-sm flex items-center justify-center">
-                <span className="bg-white text-[#0f172a] font-bold px-6 py-3 rounded-full text-lg">Sold Out</span>
+              <div className="absolute inset-4 bg-[#0f172a]/80 flex items-center justify-center backdrop-blur-sm">
+                <span className="text-white font-bold tracking-[0.3em] text-sm">SOLD OUT</span>
               </div>
             )}
             {lowStock && inStock && (
-              <div className="absolute top-4 left-4 bg-orange-500 text-white text-sm font-semibold px-3 py-1.5 rounded-full">
-                Only {inventory!.qty} left
+              <div className="absolute top-8 left-8 bg-white border border-slate-200 text-[#0f172a] text-[10px] tracking-widest font-bold px-4 py-2 shadow-md">
+                ONLY {inventory!.qty} LEFT IN SHOP
               </div>
             )}
           </div>
 
           {/* Product Info */}
-          <div className="flex flex-col gap-6">
-            <div>
-              <p className="text-slate-600 font-semibold text-sm uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                <Ruler className="w-4 h-4" /> {desc.specs}
+          <div className="flex flex-col">
+            <div className="mb-10 border-b border-slate-100 pb-10">
+              <p className="text-slate-400 font-bold text-[10px] uppercase tracking-[0.3em] mb-4 flex items-center gap-2">
+                <Ruler className="w-3 h-3" /> {defaultDescription.specs}
               </p>
-              <h1 className="text-4xl font-bold text-[#0f172a] mb-2">{product.name}</h1>
-              <p className="text-xl text-gray-500 italic">{desc.tagline}</p>
+              <h1 className="text-4xl sm:text-5xl font-serif text-[#0f172a] mb-6 leading-tight">{product.name}</h1>
+              <div className="text-2xl text-slate-500 font-light tracking-wide">${price.toFixed(2)}</div>
             </div>
 
-            {/* Price + add to cart */}
-            <div className="bg-white rounded-sm p-6 shadow-sm border border-gray-100">
-              <div className="flex items-baseline gap-2 mb-5">
-                <span className="text-3xl font-bold text-[#0f172a]">${price.toFixed(2)}</span>
-              </div>
+            <div className="mb-12">
+              <p className="text-slate-600 font-light leading-relaxed whitespace-pre-wrap">{displayDesc}</p>
+            </div>
 
+            {/* Highlights */}
+            <div className="grid grid-cols-2 gap-y-4 gap-x-8 mb-12">
+              {defaultDescription.highlights.map((h, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <div className="w-1 h-1 bg-[#0f172a] rounded-full flex-shrink-0"></div>
+                  <span className="text-sm text-slate-500 font-light">{h}</span>
+                </div>
+              ))}
+            </div>
+
+            {/* Add to cart */}
+            <div className="bg-[#f8fafc] p-8 border border-slate-200">
               {inStock ? (
                 <>
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="flex items-center border border-gray-200 rounded-sm overflow-hidden">
-                      <button
-                        onClick={() => setQty(q => Math.max(1, q - 1))}
-                        className="w-10 h-10 flex items-center justify-center hover:bg-gray-50 text-gray-600 transition-colors"
-                      >−</button>
-                      <span className="w-10 text-center font-semibold">{qty}</span>
-                      <button
-                        onClick={() => setQty(q => q + 1)}
-                        className="w-10 h-10 flex items-center justify-center hover:bg-gray-50 text-gray-600 transition-colors"
-                      >+</button>
+                  <div className="flex items-center gap-6 mb-6">
+                    <div className="text-xs font-bold tracking-widest text-slate-400">QUANTITY</div>
+                    <div className="flex items-center border border-slate-300 bg-white">
+                      <button onClick={() => setQty(q => Math.max(1, q - 1))} className="w-12 h-12 flex items-center justify-center hover:bg-slate-50 text-slate-600 transition-colors">−</button>
+                      <span className="w-12 text-center font-bold text-[#0f172a]">{qty}</span>
+                      <button onClick={() => setQty(q => q + 1)} className="w-12 h-12 flex items-center justify-center hover:bg-slate-50 text-slate-600 transition-colors">+</button>
                     </div>
-                    <span className="text-gray-400 text-sm">Total: <span className="text-[#0f172a] font-semibold">${(price * qty).toFixed(2)}</span></span>
                   </div>
                   <button
                     onClick={handleAddToCart}
-                    className="w-full flex items-center justify-center gap-2 bg-[#0f172a] text-slate-400 py-4 rounded-sm font-bold text-lg hover:bg-slate-600 hover:text-white transition-colors border border-slate-600/30"
+                    className="w-full flex items-center justify-center gap-3 bg-[#0f172a] text-white py-5 text-xs tracking-[0.2em] font-bold hover:bg-slate-800 transition-colors"
                   >
-                    <Plus className="w-5 h-5" /> Add to Cart
+                    ADD TO CART <span className="text-slate-500 font-normal">|</span> ${(price * qty).toFixed(2)}
                   </button>
                 </>
               ) : (
-                <div className="text-center py-4">
-                  <p className="text-gray-400 font-medium mb-3">
-                    Currently sold out — check back soon.
+                <div className="text-center py-6">
+                  <p className="text-[#0f172a] font-serif text-xl mb-4">
+                    Currently Unavailable.
                   </p>
-                  <Link href="/shop" className="text-slate-600 font-semibold hover:text-slate-700">Browse other boards →</Link>
+                  <Link href="/custom-order" className="text-xs font-bold tracking-widest text-slate-400 border-b border-slate-300 pb-1 hover:text-[#0f172a] hover:border-[#0f172a] transition-all">COMMISSION A SIMILAR BUILD</Link>
                 </div>
               )}
             </div>
 
-            {/* Highlights */}
-            <div className="grid grid-cols-2 gap-3">
-              {desc.highlights.map((h, i) => (
-                <div key={i} className="flex items-start gap-2 bg-white rounded-sm p-3 shadow-sm border border-gray-50">
-                  <CheckCircle className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-gray-600">{h}</span>
+            {/* Details */}
+            <div className="mt-12 pt-10 border-t border-slate-100 flex gap-8">
+              <div className="flex items-center gap-3">
+                <ShieldCheck className="w-5 h-5 text-slate-300" />
+                <span className="text-xs font-bold tracking-widest text-slate-500">FOOD-SAFE FINISH</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Truck className="w-5 h-5 text-slate-300" />
+                <span className="text-xs font-bold tracking-widest text-slate-500">NATIONWIDE SHIPPING</span>
+              </div>
             </div>
-              ))}
-            </div>
-          </div>
-        </div>
 
-        {/* Story section */}
-        <div className="mt-16 max-w-3xl">
-          <h2 className="text-2xl font-bold text-[#0f172a] mb-4">About This Board</h2>
-          <p className="text-gray-600 leading-relaxed text-lg whitespace-pre-wrap">{displayDesc}</p>
-        </div>
-
-        {/* Board icons */}
-        <div className="mt-10 flex flex-wrap gap-4">
-          <div className="flex items-center gap-2 bg-white rounded-sm px-4 py-3 shadow-sm border border-gray-100">
-            <ShieldCheck className="w-5 h-5 text-slate-500" />
-            <span className="text-sm font-medium text-gray-600">Food-Safe Finish</span>
           </div>
-          <div className="flex items-center gap-2 bg-white rounded-sm px-4 py-3 shadow-sm border border-gray-100">
-            <Ruler className="w-5 h-5 text-slate-500" />
-            <span className="text-sm font-medium text-gray-600">Premium Hardwood</span>
-          </div>
-          <div className="flex items-center gap-2 bg-white rounded-sm px-4 py-3 shadow-sm border border-gray-100">
-            <Truck className="w-5 h-5 text-slate-500" />
-            <span className="text-sm font-medium text-gray-600">Ships Nationwide</span>
-          </div>
-        </div>
-
-        <div className="mt-12">
-          <Link href="/shop" className="inline-flex items-center gap-2 text-slate-600 font-semibold hover:text-slate-700">
-            <ArrowLeft className="w-4 h-4" /> Back to Shop
-          </Link>
         </div>
       </div>
     </div>

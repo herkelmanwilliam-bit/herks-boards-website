@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server'
 import { getAdminSession } from '@/lib/auth'
-import { getOpenOrders, getClosedOrders, saveOrder, updateOrder, Order } from '@/lib/orders'
+import { getOpenOrders, getClosedOrders, groupByCustomer, saveOrder, updateOrder } from '@/lib/orders'
+
+export const dynamic = 'force-dynamic'
 
 export async function GET(req: Request) {
   const ok = await getAdminSession()

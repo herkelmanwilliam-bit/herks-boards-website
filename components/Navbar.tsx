@@ -9,57 +9,56 @@ export default function Navbar() {
   const itemCount = useCart(s => s.itemCount())
 
   const links = [
-    { href: '/shop', label: 'Shop' },
-    { href: '/custom-order', label: 'Custom Build' },
-    { href: '/about', label: 'About' },
-    { href: '/contact', label: 'Contact' },
+    { href: '/shop', label: 'THE COLLECTION' },
+    { href: '/custom-order', label: 'BESPOKE BUILDS' },
+    { href: '/about', label: 'HERITAGE' },
+    { href: '/contact', label: 'INQUIRIES' },
   ]
 
   return (
-    <nav className="sticky top-0 z-50 bg-[#0f172a] border-b border-[#94a3b8]/30 shadow-lg">
+    <nav className="sticky top-0 z-50 bg-[#0f172a] border-b border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+        <div className="flex items-center justify-between h-24">
           <Link href="/" className="flex items-center">
-            <span className="text-xl text-[#94a3b8] uppercase" style={{fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, letterSpacing: '0.25em'}}>Herk's Boards</span>
+            <span className="text-2xl text-white tracking-[0.3em] font-serif uppercase">Herk's Boards</span>
           </Link>
 
-          {/* Desktop nav */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-10">
             {links.map(l => (
-              <Link key={l.href} href={l.href} className="text-[#f8fafc]/80 hover:text-[#94a3b8] font-medium transition-colors">
+              <Link key={l.href} href={l.href} className="text-xs text-slate-300 tracking-widest hover:text-white transition-colors">
                 {l.label}
               </Link>
             ))}
           </div>
 
-          {/* Cart + Mobile */}
-          <div className="flex items-center gap-3">
-            <Link href="/cart" className="relative p-2 text-[#f8fafc]/80 hover:text-[#94a3b8] transition-colors">
-              <ShoppingCart className="w-6 h-6" />
-              {itemCount > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#94a3b8] text-[#0f172a] text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
-                  {itemCount}
-                </span>
-              )}
+          <div className="flex items-center gap-8">
+            <Link href="/cart" className="relative text-slate-300 hover:text-white transition-colors flex items-center gap-3">
+              <span className="text-xs tracking-widest hidden sm:block">CART</span>
+              <div className="relative">
+                <ShoppingCart className="w-5 h-5" />
+                {itemCount > 0 && (
+                  <span className="absolute -top-2 -right-3 bg-white text-[#0f172a] text-[10px] w-4 h-4 flex items-center justify-center font-bold shadow-sm">
+                    {itemCount}
+                  </span>
+                )}
+              </div>
             </Link>
-            <button className="md:hidden p-2 text-[#f8fafc]" onClick={() => setOpen(!open)}>
+            <button className="md:hidden text-slate-300 hover:text-white" onClick={() => setOpen(!open)}>
               {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile menu */}
       {open && (
-        <div className="md:hidden bg-[#0f172a] border-t border-[#94a3b8]/20 px-4 py-4 space-y-3">
+        <div className="md:hidden bg-[#0f172a] border-t border-slate-800 px-4 py-6 space-y-4 shadow-xl">
           {links.map(l => (
-            <Link key={l.href} href={l.href} className="block text-[#f8fafc] font-medium py-2" onClick={() => setOpen(false)}>
+            <Link key={l.href} href={l.href} className="block text-slate-300 text-xs tracking-widest py-3 border-b border-slate-800/50" onClick={() => setOpen(false)}>
               {l.label}
             </Link>
           ))}
-          <Link href="/shop" className="block w-full text-center bg-[#94a3b8] text-[#0f172a] py-3 rounded-sm font-bold mt-2" onClick={() => setOpen(false)}>
-            Shop Now
+          <Link href="/shop" className="block w-full text-center bg-white text-[#0f172a] py-4 text-xs tracking-widest font-bold mt-6 hover:bg-slate-200 transition-colors" onClick={() => setOpen(false)}>
+            ENTER SHOP
           </Link>
         </div>
       )}

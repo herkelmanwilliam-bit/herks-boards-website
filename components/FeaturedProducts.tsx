@@ -1,11 +1,9 @@
 'use client'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Plus } from 'lucide-react'
 import { getFeaturedProducts } from '@/lib/products'
 import { useCart } from '@/lib/cart'
 import toast from 'react-hot-toast'
-import React from 'react'
 
 interface InventoryItem {
   qty: number
@@ -17,11 +15,6 @@ interface InventoryItem {
 
 type Inventory = Record<string, InventoryItem>
 
-function isInStock(inv: InventoryItem | undefined): boolean {
-  if (!inv) return true
-  return inv.published && (inv.qty === -1 || inv.qty > 0)
-}
-
 export default function FeaturedProducts() {
   const [inventory, setInventory] = useState<Inventory>({})
   const [invLoaded, setInvLoaded] = useState(false)
@@ -30,91 +23,69 @@ export default function FeaturedProducts() {
   useEffect(() => {
     fetch('/api/inventory')
       .then(r => r.json())
-      .then(data => {
-        setInventory(data)
-        setInvLoaded(true)
-      })
+      .then(data => { setInventory(data); setInvLoaded(true); })
       .catch(() => setInvLoaded(true))
   }, [])
 
   const featured = getFeaturedProducts()
-    .filter(p => {
-      if (!invLoaded) return true 
-      return isInStock(inventory[p.id])
-    })
-    .slice(0, 6)
+    .filter(p => !invLoaded || (inventory[p.id]?.published !== false))
+    .slice(0, 4)
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-32 bg-[#f8fafc]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-end justify-between mb-12">
-          <div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#0f172a] mb-2">Featured Builds</h2>
-            <p className="text-[#0f172a]/50 text-lg">Handcrafted and ready to ship.</p>
-          </div>
-          <Link href="/shop" className="hidden sm:inline-flex text-slate-600 font-semibold hover:text-slate-700">
-            View all shop items →
-          </Link>
+        
+        <div className="text-center mb-24">
+          <h2 className="text-xs tracking-[0.3em] text-slate-400 font-bold mb-4">SIGNATURE PIECES</h2>
+          <h3 className="text-4xl sm:text-5xl font-serif text-[#0f172a]">The Master Collection</h3>
+          <div className="h-px w-16 bg-slate-300 mx-auto mt-8"></div>
         </div>
 
-        {featured.length === 0 && invLoaded ? (
-          <div className="text-center py-16 text-gray-400">
-            <p className="text-lg font-medium">Check back soon — building more inventory.</p>
-            <Link href="/shop" className="mt-4 inline-block text-slate-600 font-semibold hover:text-slate-700">
-              Browse all products →
-            </Link>
-          </div>
-        ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featured.map(product => {
-              const inv = inventory[product.id]
-              const price = inv?.price ?? product.price
-              const displayImage = inv?.image || product.image
-              const displayDesc = inv?.description || product.description
-              
-              const dynamicProduct = { ...product, price, image: displayImage, description: displayDesc }
+        <div className="grid lg:grid-cols-2 gap-12">
+          {featured.map(product => {
+            const inv = inventory[product.id]
+            const price = inv?.price ?? product.price
+            const displayImage = inv?.image || product.image
+            const displayDesc = inv?.description || product.description
+            const inStock = !inv || (inv.qty === -1 || inv.qty > 0)
 
-              return (
-                <div key={product.id} className="bg-white border border-gray-100 rounded-sm overflow-hidden shadow-sm hover:shadow-md hover:border-slate-600/30 transition-all group">
-                  <Link href={`/shop/${product.id}`} className="block">
-                    <div className="aspect-[4/3] overflow-hidden bg-gray-50 flex items-center justify-center">
-                      {displayImage === '/images/placeholder-board.jpg' ? (
-                        <span className="text-gray-400">No Image</span>
-                      ) : (
-                        <img
-                          src={displayImage}
-                          alt={product.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                      )}
+            return (
+              <div key={product.id} className="group bg-white flex flex-col sm:flex-row border border-slate-200 hover:border-[#0f172a] transition-all duration-500 overflow-hidden shadow-sm hover:shadow-xl">
+                <Link href={`/shop/${product.id}`} className="w-full sm:w-1/2 block aspect-square sm:aspect-auto bg-slate-100 relative overflow-hidden">
+                  {displayImage === '/images/placeholder-board.jpg' ? (
+                    <div className="absolute inset-0 flex items-center justify-center text-slate-300 font-serif text-sm tracking-widest bg-slate-50">NO IMAGE</div>
+                  ) : (
+                    <img src={displayImage} alt={product.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  )}
+                  {!inStock && (
+                    <div className="absolute inset-0 bg-[#0f172a]/80 flex items-center justify-center text-white tracking-[0.3em] text-xs font-bold backdrop-blur-sm">
+                      SOLD OUT
                     </div>
-                  </Link>
-                  <div className="p-5">
-                    <div className="flex items-start justify-between mb-2">
-                      <Link href={`/shop/${product.id}`} className="font-bold text-[#0f172a] text-lg hover:text-slate-600 transition-colors">{product.name}</Link>
-                      <span className="text-slate-600 font-semibold text-sm ml-2 shrink-0">${price.toFixed(2)}</span>
-                    </div>
-                    <p className="text-gray-500 text-sm mb-4 line-clamp-2">{displayDesc}</p>
-                    <button
-                      onClick={() => {
-                        addItem(dynamicProduct)
-                        toast.success(`${product.name} added to cart!`)
-                      }}
-                      className="w-full flex items-center justify-center gap-2 bg-[#0f172a] text-slate-400 py-3 rounded-sm font-semibold hover:bg-slate-600 hover:text-white transition-colors border border-slate-600/30"
-                    >
-                      <Plus className="w-4 h-4" />
-                      Add to Cart
-                    </button>
-                  </div>
+                  )}
+                </Link>
+                
+                <div className="w-full sm:w-1/2 p-8 sm:p-10 flex flex-col justify-center relative bg-white z-10">
+                  <h4 className="font-serif text-2xl text-[#0f172a] mb-2 leading-snug">{product.name}</h4>
+                  <div className="text-slate-400 text-sm mb-6 tracking-widest font-medium">${price.toFixed(2)}</div>
+                  <p className="text-slate-500 text-sm font-light leading-relaxed mb-8 line-clamp-3">
+                    {displayDesc}
+                  </p>
+                  <button
+                    onClick={() => { addItem({ ...product, price, image: displayImage, description: displayDesc }); toast.success('Added to Cart'); }}
+                    disabled={!inStock}
+                    className="mt-auto w-full bg-white text-[#0f172a] border border-[#0f172a] py-4 text-xs tracking-[0.2em] font-bold hover:bg-[#0f172a] hover:text-white transition-colors disabled:opacity-30 disabled:hover:bg-white disabled:hover:text-[#0f172a]"
+                  >
+                    {inStock ? 'ADD TO CART' : 'UNAVAILABLE'}
+                  </button>
                 </div>
-              )
-            })}
-          </div>
-        )}
+              </div>
+            )
+          })}
+        </div>
 
-        <div className="text-center mt-8 sm:hidden">
-          <Link href="/shop" className="inline-flex items-center gap-2 text-slate-600 font-semibold">
-            View all products →
+        <div className="text-center mt-24">
+          <Link href="/shop" className="inline-block border-b border-[#0f172a] pb-2 text-xs tracking-[0.2em] font-bold text-[#0f172a] hover:text-slate-500 hover:border-slate-500 transition-colors">
+            VIEW ENTIRE CATALOG
           </Link>
         </div>
       </div>

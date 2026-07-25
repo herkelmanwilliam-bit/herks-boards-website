@@ -5,65 +5,80 @@ import { useState } from 'react'
 
 export default function ContactPage() {
   const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setStatus('submitting')
-    // Simulation for now, will connect to Resend
-    setTimeout(() => {
+    
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      })
+      if (!res.ok) throw new Error('Failed to send')
       setStatus('success')
-    }, 1000)
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid lg:grid-cols-2 gap-12">
+    <div className="min-h-screen bg-[#f8fafc]">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+        <div className="grid lg:grid-cols-2 gap-16">
           {/* Contact Info */}
           <div>
-            <div className="space-y-6">
+            <div className="space-y-8">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-[#0f172a] rounded-sm flex items-center justify-center flex-shrink-0 border border-gray-800">
-                  <MapPin className="w-5 h-5 text-slate-400" />
+                <div className="w-12 h-12 bg-white rounded-sm flex items-center justify-center flex-shrink-0 border border-slate-200 shadow-sm">
+                  <MapPin className="w-5 h-5 text-[#0f172a]" />
                 </div>
                 <div>
-                  <div className="font-semibold text-[#0f172a] mb-1">Workshop Location</div>
-                  <div className="text-[#0f172a]/70">Iowa, USA</div>
+                  <div className="font-serif text-xl text-[#0f172a] mb-1">Workshop Location</div>
+                  <div className="text-slate-500 font-light tracking-wider text-sm">IOWA, USA</div>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-[#0f172a] rounded-sm flex items-center justify-center flex-shrink-0 border border-gray-800">
-                  <Mail className="w-5 h-5 text-slate-400" />
+                <div className="w-12 h-12 bg-white rounded-sm flex items-center justify-center flex-shrink-0 border border-slate-200 shadow-sm">
+                  <Mail className="w-5 h-5 text-[#0f172a]" />
                 </div>
                 <div>
-                  <div className="font-semibold text-[#0f172a] mb-1">Email</div>
-                  <a href="mailto:info@herksboards.com" className="text-slate-600 hover:text-slate-700 font-medium">
-                    info@herksboards.com
+                  <div className="font-serif text-xl text-[#0f172a] mb-1">Email</div>
+                  <a href="mailto:info@herksboards.com" className="text-slate-500 font-light tracking-wider hover:text-[#0f172a] text-sm transition-colors">
+                    INFO@HERKSBOARDS.COM
                   </a>
                 </div>
               </div>
             </div>
 
             {/* Contact Form */}
-            <div className="mt-10 bg-[#0f172a] rounded-sm p-8 border border-gray-800 shadow-xl">
-              <h3 className="text-white font-bold text-2xl mb-2">Get in Touch</h3>
-              <p className="text-gray-400 mb-6">Have a question about a board or a custom build? Send a message.</p>
+            <div className="mt-16 bg-white rounded-sm p-8 border border-slate-200 shadow-sm">
+              <h3 className="text-[#0f172a] font-serif text-3xl mb-3">Get in Touch</h3>
+              <p className="text-slate-500 font-light mb-8 text-sm">Have a question about a board or a custom build? Send a message.</p>
 
               {status === 'success' ? (
-                <div className="flex items-center gap-3 text-green-400 bg-green-400/10 border border-green-400/20 rounded-sm px-4 py-4">
-                  <CheckCircle className="w-5 h-5 flex-shrink-0" />
-                  <p className="text-sm font-medium">Message sent! I'll get back to you soon.</p>
+                <div className="flex items-center gap-3 text-[#0f172a] bg-slate-100 border border-slate-300 rounded-sm px-6 py-6">
+                  <CheckCircle className="w-6 h-6 flex-shrink-0" />
+                  <p className="text-sm font-medium tracking-wide">Message sent! We'll get back to you soon.</p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className="space-y-4">
+                <form onSubmit={handleSubmit} className="space-y-5">
                   <div>
                     <input
                       type="text"
                       name="name"
+                      value={formData.name}
+                      onChange={handleChange}
                       placeholder="Your name"
                       required
-                      className="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-slate-400"
+                      className="w-full bg-[#f8fafc] border border-slate-200 rounded-sm px-4 py-4 text-[#0f172a] placeholder-slate-400 focus:outline-none focus:border-[#0f172a] text-sm"
                     />
                   </div>
 
@@ -71,24 +86,28 @@ export default function ContactPage() {
                     <input
                       type="email"
                       name="email"
+                      value={formData.email}
+                      onChange={handleChange}
                       placeholder="Email address"
                       required
-                      className="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-slate-400"
+                      className="w-full bg-[#f8fafc] border border-slate-200 rounded-sm px-4 py-4 text-[#0f172a] placeholder-slate-400 focus:outline-none focus:border-[#0f172a] text-sm"
                     />
                   </div>
 
                   <div>
                     <textarea
                       name="message"
-                      rows={4}
+                      value={formData.message}
+                      onChange={handleChange}
+                      rows={5}
                       placeholder="Your message..."
                       required
-                      className="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-slate-400 resize-none"
+                      className="w-full bg-[#f8fafc] border border-slate-200 rounded-sm px-4 py-4 text-[#0f172a] placeholder-slate-400 focus:outline-none focus:border-[#0f172a] resize-none text-sm"
                     />
                   </div>
 
                   {status === 'error' && (
-                    <div className="flex items-center gap-3 text-red-400 bg-red-400/10 rounded-sm px-4 py-3">
+                    <div className="flex items-center gap-3 text-red-600 bg-red-50 rounded-sm px-4 py-3 border border-red-100">
                       <AlertCircle className="w-5 h-5 flex-shrink-0" />
                       <p className="text-sm">Something went wrong. Please try again later.</p>
                     </div>
@@ -97,27 +116,18 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     disabled={status === 'submitting'}
-                    className="w-full bg-slate-600 text-white py-4 rounded-sm font-bold hover:bg-slate-500 transition-colors disabled:opacity-60 disabled:cursor-not-allowed mt-2"
+                    className="w-full bg-[#0f172a] text-white py-4 rounded-sm font-bold tracking-[0.2em] text-xs hover:bg-slate-800 transition-colors disabled:opacity-50 mt-4"
                   >
-                    {status === 'submitting' ? 'Sending...' : 'Send Message'}
+                    {status === 'submitting' ? 'SENDING...' : 'SEND MESSAGE'}
                   </button>
                 </form>
               )}
             </div>
           </div>
 
-          {/* Map (Generic Iowa for now) */}
-          <div className="rounded-sm overflow-hidden shadow-lg h-[400px] lg:h-auto border border-gray-200">
-            <iframe
-              title="Iowa Location"
-              width="100%"
-              height="100%"
-              style={{ border: 0, minHeight: '400px' }}
-              loading="lazy"
-              allowFullScreen
-              referrerPolicy="no-referrer-when-downgrade"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3012876.5414845524!2d-96.1130635443306!3d42.06240212781446!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87ee5e6f51952f41%3A0xc6fb04cbe39049a4!2sIowa!5e0!3m2!1sen!2sus!4v1"
-            />
+          <div className="bg-slate-200 rounded-sm border border-slate-300 flex items-center justify-center h-[400px] lg:h-auto overflow-hidden relative grayscale opacity-80 mix-blend-multiply">
+            {/* Minimalist Iowa Map Placeholder */}
+            <div className="absolute inset-0 bg-[#0f172a]/5 flex items-center justify-center font-serif text-4xl text-slate-400 tracking-widest">IOWA</div>
           </div>
         </div>
       </div>
