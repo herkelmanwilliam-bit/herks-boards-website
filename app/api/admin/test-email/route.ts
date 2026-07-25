@@ -7,36 +7,25 @@ export async function POST() {
   if (!ok) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   try {
-    const result = await sendOrderNotification({
+    const orderData = {
       customerName: 'Test Customer',
       customerEmail: 'test@example.com',
-      phone: '612-555-0100',
-      fulfillment: 'pickup',
-      address: 'Farm Pickup — 700 County Road 92, Minnetrista MN',
-      notes: 'This is a test order notification.',
+      address: '123 Test Street, Des Moines, IA',
       items: [
-        { name: 'Cherry Tomatoes', quantity: 2, unitAmount: 500 },
-        { name: 'Corinto Cucumbers', quantity: 3, unitAmount: 350 },
-        { name: 'Farm Fresh Eggs — Dozen', quantity: 1, unitAmount: 700 },
+        { name: '8"x12" Cutting Board w/ Juice Groove', quantity: 2, unitAmount: 6000 },
+        { name: 'Iowa State Plaque', quantity: 1, unitAmount: 4500 },
       ],
-      total: 2750,
+      total: 16500,
       stripeSessionId: 'cs_test_TESTORDER123456',
-    })
-    // Also test customer confirmation — send to Scott's email so he can preview it
+    }
+
+    const result = await sendOrderNotification(orderData)
+    
+    // Test customer confirmation — send to Scott's email so he can preview it
     await sendCustomerConfirmation({
-      customerName: 'Scott Herkelman',
-      customerEmail: 'sherkelman@gmail.com',
-      phone: '612-555-0100',
-      fulfillment: 'pickup',
-      address: 'Farm Pickup — 700 County Road 92, Minnetrista MN',
-      notes: 'This is a test order — checking customer confirmation email.',
-      items: [
-        { name: 'Cherry Tomatoes', quantity: 2, unitAmount: 500 },
-        { name: 'Corinto Cucumbers', quantity: 3, unitAmount: 350 },
-        { name: 'Farm Fresh Eggs — Dozen', quantity: 1, unitAmount: 700 },
-      ],
-      total: 2750,
-      stripeSessionId: 'cs_test_TESTORDER123456',
+      ...orderData,
+      customerEmail: 'sherkelman@gmail.com', // Override to send the preview to you
+      customerName: 'Scott Herkelman'
     })
 
     return NextResponse.json({ ok: true, message: 'Both test emails sent! Check sherkelman@gmail.com for the customer confirmation preview.', data: result })
