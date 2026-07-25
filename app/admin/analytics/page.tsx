@@ -58,7 +58,7 @@ export default function AnalyticsPage() {
     setLoading(true)
     setError('')
     try {
-      const res = await fetch(\`/api/admin/analytics?period=\${p}\`)
+      const res = await fetch(`/api/admin/analytics?period=${p}`)
       if (!res.ok) throw new Error('Failed to load analytics')
       setData(await res.json())
     } catch (e: any) {
@@ -100,11 +100,11 @@ export default function AnalyticsPage() {
             <button
               key={p.key}
               onClick={() => setPeriod(p.key)}
-              className={\`px-4 py-2 rounded-lg text-sm font-semibold transition-colors \${
+              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
                 period === p.key
                   ? 'bg-amber-600 text-white'
                   : 'bg-white text-gray-500 hover:text-[#1C1C1C] border border-gray-200'
-              }\`}
+              }`}
             >
               {p.label}
             </button>

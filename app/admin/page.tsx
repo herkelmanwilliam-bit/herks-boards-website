@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { products } from '@/lib/products'
 import { Image as ImageIcon } from 'lucide-react'
 
