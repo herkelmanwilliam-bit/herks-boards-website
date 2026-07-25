@@ -55,10 +55,10 @@ export default function ShopPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-[#1C1C1C] py-12 px-4">
+      <div className="bg-[#0f172a] py-12 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl font-bold text-white mb-2">Shop Herk's Boards</h1>
-          <p className="text-amber-500 text-lg">Handcrafted in Iowa • Nationwide US Shipping</p>
+          <p className="text-slate-400 text-lg">Handcrafted in Iowa • Nationwide US Shipping</p>
         </div>
       </div>
 
@@ -71,7 +71,7 @@ export default function ShopPage() {
               onClick={() => setCategory(c.key)}
               className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-medium transition-colors ${
                 category === c.key
-                  ? 'bg-[#1C1C1C] text-amber-500 shadow-md border border-amber-500/30'
+                  ? 'bg-[#0f172a] text-slate-400 shadow-md border border-slate-400/30'
                   : 'bg-white text-gray-600 hover:bg-gray-50 border border-gray-200'
               }`}
             >
@@ -94,7 +94,7 @@ export default function ShopPage() {
             const dynamicProduct = { ...product, price, image: displayImage, description: displayDesc }
 
             return (
-              <div key={product.id} className="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-md hover:border-amber-500/30 border border-transparent transition-all">
+              <div key={product.id} className="bg-white rounded-sm overflow-hidden shadow-sm hover:shadow-md hover:border-slate-400/30 border border-transparent transition-all">
                 <Link href={`/shop/${product.id}`} className="block">
                   <div className="aspect-[4/3] overflow-hidden bg-gray-100 relative flex items-center justify-center">
                     {displayImage === '/images/placeholder-board.jpg' ? (
@@ -124,14 +124,14 @@ export default function ShopPage() {
                 </Link>
                 <div className="p-4">
                   <div className="flex justify-between items-start mb-1">
-                    <Link href={`/shop/${product.id}`} className="font-bold text-[#1C1C1C] hover:text-amber-700 transition-colors">{product.name}</Link>
+                    <Link href={`/shop/${product.id}`} className="font-bold text-[#0f172a] hover:text-slate-600 transition-colors">{product.name}</Link>
                   </div>
                   <p className="text-gray-500 text-sm mb-1 line-clamp-2">{displayDesc}</p>
-                  <p className="text-amber-700 font-semibold text-sm mb-3">${price.toFixed(2)}</p>
+                  <p className="text-slate-600 font-semibold text-sm mb-3">${price.toFixed(2)}</p>
                   <button
                     onClick={() => { addItem(dynamicProduct); toast.success(`${product.name} added!`) }}
                     disabled={!inStock}
-                    className="w-full flex items-center justify-center gap-2 bg-[#1C1C1C] text-amber-500 py-2.5 rounded-xl text-sm font-semibold hover:bg-amber-700 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed border border-amber-700/30"
+                    className="w-full flex items-center justify-center gap-2 bg-[#0f172a] text-slate-400 py-2.5 rounded-sm text-sm font-semibold hover:bg-slate-600 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed border border-slate-600/30"
                   >
                     <Plus className="w-4 h-4" /> {inStock ? 'Add to Cart' : 'Sold Out'}
                   </button>

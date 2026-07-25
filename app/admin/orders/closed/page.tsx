@@ -76,19 +76,19 @@ export default function ClosedOrdersPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-[#1C1C1C] border-b border-amber-900/20 px-6 py-4">
+      <div className="bg-[#0f172a] border-b border-slate-800/20 px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-4">
-            <Link href="/admin/orders" className="text-amber-500 hover:text-amber-400 text-sm">← Open Orders</Link>
+            <Link href="/admin/orders" className="text-slate-400 hover:text-slate-300 text-sm">← Open Orders</Link>
             <h1 className="text-white font-bold text-xl">📦 Closed Orders</h1>
             <span className="bg-white/10 text-white/60 text-xs font-bold px-2 py-0.5 rounded-full">{totalClosed}</span>
           </div>
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <div className="text-amber-500 font-bold text-lg">{fmt(totalRevenue)}</div>
+              <div className="text-slate-400 font-bold text-lg">{fmt(totalRevenue)}</div>
               <div className="text-white/40 text-xs">shipped revenue</div>
             </div>
-            <button onClick={load} className="text-white/60 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-colors">
+            <button onClick={load} className="text-white/60 hover:text-white p-2 rounded-sm hover:bg-white/10 transition-colors">
               <RefreshCw className="w-4 h-4" />
             </button>
           </div>
@@ -101,14 +101,14 @@ export default function ClosedOrdersPage() {
           placeholder="Search customer..."
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:border-amber-500 w-48 shadow-sm"
+          className="border border-gray-200 rounded-sm px-3 py-2 text-sm bg-white focus:outline-none focus:border-slate-400 w-48 shadow-sm"
         />
         <div className="flex gap-2">
           {(['all', 'shipped', 'cancelled'] as const).map(f => (
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${filter === f ? 'bg-amber-600 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:text-gray-800'}`}
+              className={`px-3 py-1.5 rounded-sm text-xs font-semibold transition-colors ${filter === f ? 'bg-slate-500 text-white' : 'bg-white text-gray-500 border border-gray-200 hover:text-gray-800'}`}
             >
               {f === 'all' ? 'All' : f === 'shipped' ? '🚚 Shipped' : '❌ Cancelled'}
             </button>
@@ -128,7 +128,7 @@ export default function ClosedOrdersPage() {
 
         <div className="space-y-4">
           {filteredCustomers.map(customer => (
-            <div key={customer.email} className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div key={customer.email} className="bg-white rounded-sm shadow-sm border border-gray-200 overflow-hidden">
               <button
                 onClick={() => toggleCustomer(customer.email)}
                 className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
@@ -138,7 +138,7 @@ export default function ClosedOrdersPage() {
                     {customer.name.charAt(0).toUpperCase()}
                   </div>
                   <div className="text-left">
-                    <div className="font-bold text-[#1C1C1C] text-lg">{customer.name}</div>
+                    <div className="font-bold text-[#0f172a] text-lg">{customer.name}</div>
                     <div className="flex items-center gap-3 text-sm text-gray-500 mt-0.5">
                       <span className="flex items-center gap-1"><Mail className="w-3 h-3" />{customer.email}</span>
                     </div>
@@ -146,7 +146,7 @@ export default function ClosedOrdersPage() {
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="text-right hidden sm:block">
-                    <div className="text-sm font-semibold text-[#1C1C1C]">
+                    <div className="text-sm font-semibold text-[#0f172a]">
                       {fmt(customer.orders.filter(o => o.status === 'shipped').reduce((s, o) => s + o.total, 0))} shipped
                     </div>
                     <div className="text-xs text-gray-400">{customer.orders.length} order{customer.orders.length !== 1 ? 's' : ''}</div>
@@ -163,15 +163,15 @@ export default function ClosedOrdersPage() {
                   <div className="px-6 py-3 bg-gray-50 flex flex-wrap gap-6 text-sm border-b border-gray-100">
                     <span className="flex items-center gap-1.5 text-gray-600">
                       <DollarSign className="w-3.5 h-3.5" />
-                      Total orders: <strong className="text-[#1C1C1C]">{customer.orderCount}</strong>
+                      Total orders: <strong className="text-[#0f172a]">{customer.orderCount}</strong>
                     </span>
                     <span className="flex items-center gap-1.5 text-gray-600">
                       <Clock className="w-3.5 h-3.5" />
-                      First order: <strong className="text-[#1C1C1C]">{fmtDate(customer.firstOrderAt)}</strong>
+                      First order: <strong className="text-[#0f172a]">{fmtDate(customer.firstOrderAt)}</strong>
                     </span>
                     <span className="flex items-center gap-1.5 text-gray-600">
                       <Clock className="w-3.5 h-3.5" />
-                      Last order: <strong className="text-[#1C1C1C]">{fmtDate(customer.lastOrderAt)}</strong>
+                      Last order: <strong className="text-[#0f172a]">{fmtDate(customer.lastOrderAt)}</strong>
                     </span>
                   </div>
 
@@ -200,12 +200,12 @@ export default function ClosedOrdersPage() {
                         </div>
                       </div>
 
-                      <div className="bg-gray-50 rounded-xl p-3 mb-3 border border-gray-100">
+                      <div className="bg-gray-50 rounded-sm p-3 mb-3 border border-gray-100">
                         <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">Items</div>
                         <div className="space-y-1">
                           {order.items.map((item, i) => (
                             <div key={i} className="flex justify-between text-sm">
-                              <span className="text-[#1C1C1C]"><span className="font-bold text-amber-700">{item.quantity}x</span> {item.name}</span>
+                              <span className="text-[#0f172a]"><span className="font-bold text-slate-600">{item.quantity}x</span> {item.name}</span>
                               <span className="text-gray-500 tabular-nums">{fmt(item.unitAmount * item.quantity)}</span>
                             </div>
                           ))}
@@ -215,12 +215,12 @@ export default function ClosedOrdersPage() {
                       {(order.internalNotes || order.trackingNumber) && (
                         <div className="mb-3 space-y-2">
                           {order.trackingNumber && (
-                            <div className="bg-green-50 border border-green-100 rounded-lg px-3 py-2 text-xs text-green-800">
+                            <div className="bg-green-50 border border-green-100 rounded-sm px-3 py-2 text-xs text-green-800">
                               <span className="font-semibold">Tracking Number:</span> {order.trackingNumber}
                             </div>
                           )}
                           {order.internalNotes && (
-                            <div className="bg-blue-50 border border-blue-100 rounded-lg px-3 py-2 text-xs text-blue-700">
+                            <div className="bg-blue-50 border border-blue-100 rounded-sm px-3 py-2 text-xs text-blue-700">
                               <span className="font-semibold">Internal notes:</span> {order.internalNotes}
                             </div>
                           )}
@@ -231,7 +231,7 @@ export default function ClosedOrdersPage() {
                         href={`https://dashboard.stripe.com/payments/${order.stripeSessionId}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-amber-600 hover:text-amber-800 font-medium transition-colors"
+                        className="text-xs text-slate-500 hover:text-slate-700 font-medium transition-colors"
                       >
                         View in Stripe →
                       </a>

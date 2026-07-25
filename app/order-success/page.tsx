@@ -13,22 +13,22 @@ export default function OrderSuccess() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="bg-white rounded-3xl p-10 max-w-md w-full text-center shadow-sm border border-gray-100">
-        <div className="w-20 h-20 bg-amber-50 rounded-full flex items-center justify-center mx-auto mb-6 border border-amber-100">
-          <CheckCircle className="w-10 h-10 text-amber-600" />
+      <div className="bg-white rounded-sm p-10 max-w-md w-full text-center shadow-sm border border-gray-100">
+        <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6 border border-slate-50">
+          <CheckCircle className="w-10 h-10 text-slate-500" />
         </div>
-        <h1 className="text-3xl font-bold text-[#1C1C1C] mb-3">Order Confirmed!</h1>
+        <h1 className="text-3xl font-bold text-[#0f172a] mb-3">Order Confirmed!</h1>
         <p className="text-gray-500 mb-4 leading-relaxed">
           Thank you for your order! Your handcrafted board will be prepared and securely packaged for transit.
         </p>
-        <p className="text-amber-700 font-medium mb-8">
+        <p className="text-slate-600 font-medium mb-8">
           You will receive an email with tracking information as soon as it ships.
         </p>
         <div className="space-y-3">
-          <Link href="/shop" className="block w-full bg-[#1C1C1C] text-amber-500 py-3 rounded-xl font-semibold hover:bg-amber-600 hover:text-white transition-colors border border-amber-700/30">
+          <Link href="/shop" className="block w-full bg-[#0f172a] text-slate-400 py-3 rounded-sm font-semibold hover:bg-slate-500 hover:text-white transition-colors border border-slate-600/30">
             Continue Shopping
           </Link>
-          <Link href="/" className="block w-full border border-gray-200 text-gray-600 py-3 rounded-xl font-semibold hover:bg-gray-50 transition-colors">
+          <Link href="/" className="block w-full border border-gray-200 text-gray-600 py-3 rounded-sm font-semibold hover:bg-gray-50 transition-colors">
             Back to Home
           </Link>
         </div>

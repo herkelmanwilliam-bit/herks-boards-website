@@ -40,7 +40,7 @@ function fmtWeek(dateStr: string) {
   return new Date(dateStr).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
 }
 
-function Bar({ pct, color = 'bg-amber-500' }: { pct: number; color?: string }) {
+function Bar({ pct, color = 'bg-slate-400' }: { pct: number; color?: string }) {
   return (
     <div className="w-full bg-gray-100 rounded-full h-2">
       <div className={`${color} h-2 rounded-full transition-all duration-500`} style={{ width: `${Math.min(100, pct)}%` }} />
@@ -78,16 +78,16 @@ export default function AnalyticsPage() {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="bg-[#1C1C1C] border-b border-amber-900/20 px-6 py-4">
+      <div className="bg-[#0f172a] border-b border-slate-800/20 px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-4">
-            <Link href="/admin" className="text-amber-500 hover:text-amber-400 text-sm">← Admin</Link>
+            <Link href="/admin" className="text-slate-400 hover:text-slate-300 text-sm">← Admin</Link>
             <h1 className="text-white font-bold text-xl flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-amber-500" />
+              <TrendingUp className="w-5 h-5 text-slate-400" />
               Revenue & Analytics
             </h1>
           </div>
-          <button onClick={() => load(period)} className="text-white/60 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-colors">
+          <button onClick={() => load(period)} className="text-white/60 hover:text-white p-2 rounded-sm hover:bg-white/10 transition-colors">
             <RefreshCw className="w-4 h-4" />
           </button>
         </div>
@@ -100,10 +100,10 @@ export default function AnalyticsPage() {
             <button
               key={p.key}
               onClick={() => setPeriod(p.key)}
-              className={`px-4 py-2 rounded-lg text-sm font-semibold transition-colors ${
+              className={`px-4 py-2 rounded-sm text-sm font-semibold transition-colors ${
                 period === p.key
-                  ? 'bg-amber-600 text-white'
-                  : 'bg-white text-gray-500 hover:text-[#1C1C1C] border border-gray-200'
+                  ? 'bg-slate-500 text-white'
+                  : 'bg-white text-gray-500 hover:text-[#0f172a] border border-gray-200'
               }`}
             >
               {p.label}
@@ -114,62 +114,62 @@ export default function AnalyticsPage() {
 
       <div className="max-w-6xl mx-auto px-6 py-6 space-y-6">
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-red-700 text-sm">{error}</div>
+          <div className="bg-red-50 border border-red-200 rounded-sm p-4 text-red-700 text-sm">{error}</div>
         )}
 
         {loading && (
-          <div className="text-center py-16 text-[#1C1C1C]/40">Loading analytics...</div>
+          <div className="text-center py-16 text-[#0f172a]/40">Loading analytics...</div>
         )}
 
         {!loading && data && (
           <>
             {/* Summary cards */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+              <div className="bg-white rounded-sm p-5 shadow-sm border border-gray-100">
                 <div className="flex items-center gap-3 mb-1">
-                  <DollarSign className="w-5 h-5 text-amber-500" />
+                  <DollarSign className="w-5 h-5 text-slate-400" />
                   <span className="text-sm text-gray-500 font-medium">Total Revenue</span>
                 </div>
-                <div className="text-3xl font-bold text-[#1C1C1C]">{fmt(data.totalRevenue)}</div>
+                <div className="text-3xl font-bold text-[#0f172a]">{fmt(data.totalRevenue)}</div>
                 <div className="text-xs text-gray-400 mt-1">{PERIODS.find(p => p.key === period)?.label}</div>
               </div>
-              <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+              <div className="bg-white rounded-sm p-5 shadow-sm border border-gray-100">
                 <div className="flex items-center gap-3 mb-1">
-                  <ShoppingBag className="w-5 h-5 text-amber-500" />
+                  <ShoppingBag className="w-5 h-5 text-slate-400" />
                   <span className="text-sm text-gray-500 font-medium">Orders Delivered</span>
                 </div>
-                <div className="text-3xl font-bold text-[#1C1C1C]">{data.orderCount}</div>
+                <div className="text-3xl font-bold text-[#0f172a]">{data.orderCount}</div>
                 <div className="text-xs text-gray-400 mt-1">completed orders</div>
               </div>
-              <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+              <div className="bg-white rounded-sm p-5 shadow-sm border border-gray-100">
                 <div className="flex items-center gap-3 mb-1">
-                  <TrendingUp className="w-5 h-5 text-amber-500" />
+                  <TrendingUp className="w-5 h-5 text-slate-400" />
                   <span className="text-sm text-gray-500 font-medium">Avg Order Value</span>
                 </div>
-                <div className="text-3xl font-bold text-[#1C1C1C]">{fmt(data.avgOrder)}</div>
+                <div className="text-3xl font-bold text-[#0f172a]">{fmt(data.avgOrder)}</div>
                 <div className="text-xs text-gray-400 mt-1">per order</div>
               </div>
             </div>
 
             {/* Revenue by Category */}
             {data.byCategory.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
                 <div className="px-6 py-4 border-b border-gray-100">
-                  <h2 className="font-bold text-[#1C1C1C]">📊 Revenue by Category</h2>
+                  <h2 className="font-bold text-[#0f172a]">📊 Revenue by Category</h2>
                   <p className="text-xs text-gray-500 mt-0.5">{PERIODS.find(p => p.key === period)?.label}</p>
                 </div>
                 <div className="p-6 space-y-4">
                   {data.byCategory.map(cat => (
                     <div key={cat.category}>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm font-semibold text-[#1C1C1C]">{cat.category}</span>
+                        <span className="text-sm font-semibold text-[#0f172a]">{cat.category}</span>
                         <div className="flex items-center gap-4 text-sm">
                           <span className="text-gray-400">{cat.qty} units</span>
-                          <span className="font-bold text-amber-700 w-20 text-right">{fmt(cat.revenue)}</span>
+                          <span className="font-bold text-slate-600 w-20 text-right">{fmt(cat.revenue)}</span>
                           <span className="text-gray-400 w-10 text-right">{Math.round(cat.revenue / totalForPct * 100)}%</span>
                         </div>
                       </div>
-                      <Bar pct={cat.revenue / maxCategoryRevenue * 100} color="bg-amber-500" />
+                      <Bar pct={cat.revenue / maxCategoryRevenue * 100} color="bg-slate-400" />
                     </div>
                   ))}
                 </div>
@@ -178,9 +178,9 @@ export default function AnalyticsPage() {
 
             {/* Revenue by Product */}
             {data.byProduct.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
                 <div className="px-6 py-4 border-b border-gray-100">
-                  <h2 className="font-bold text-[#1C1C1C]">🪵 Revenue by Product</h2>
+                  <h2 className="font-bold text-[#0f172a]">🪵 Revenue by Product</h2>
                   <p className="text-xs text-gray-500 mt-0.5">{PERIODS.find(p => p.key === period)?.label}</p>
                 </div>
                 <div className="overflow-x-auto">
@@ -201,14 +201,14 @@ export default function AnalyticsPage() {
                             <div className="flex items-center gap-3">
                               <span className="text-xs text-gray-400 w-5 text-right">{i + 1}</span>
                               <div>
-                                <div className="text-sm font-medium text-[#1C1C1C]">{p.name}</div>
-                                <div className="w-32 mt-1"><Bar pct={p.revenue / maxProductRevenue * 100} color="bg-amber-500" /></div>
+                                <div className="text-sm font-medium text-[#0f172a]">{p.name}</div>
+                                <div className="w-32 mt-1"><Bar pct={p.revenue / maxProductRevenue * 100} color="bg-slate-400" /></div>
                               </div>
                             </div>
                           </td>
                           <td className="px-4 py-3 text-right text-sm text-gray-500 tabular-nums">{p.qty}</td>
                           <td className="px-4 py-3 text-right text-sm text-gray-500 tabular-nums">{p.orders}</td>
-                          <td className="px-4 py-3 text-right text-sm font-bold text-amber-700 tabular-nums">{fmt(p.revenue)}</td>
+                          <td className="px-4 py-3 text-right text-sm font-bold text-slate-600 tabular-nums">{fmt(p.revenue)}</td>
                           <td className="px-6 py-3 text-right text-sm text-gray-400 tabular-nums">
                             {Math.round(p.revenue / totalForPct * 100)}%
                           </td>
@@ -222,16 +222,16 @@ export default function AnalyticsPage() {
 
             {/* Revenue by Month */}
             {data.byMonth.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
                 <div className="px-6 py-4 border-b border-gray-100">
-                  <h2 className="font-bold text-[#1C1C1C]">📅 Monthly Revenue (All Time)</h2>
+                  <h2 className="font-bold text-[#0f172a]">📅 Monthly Revenue (All Time)</h2>
                 </div>
                 <div className="p-6 space-y-3">
                   {data.byMonth.map(m => (
                     <div key={m.month}>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm font-medium text-[#1C1C1C]">{fmtMonth(m.month)}</span>
-                        <span className="text-sm font-bold text-amber-700">{fmt(m.revenue)}</span>
+                        <span className="text-sm font-medium text-[#0f172a]">{fmtMonth(m.month)}</span>
+                        <span className="text-sm font-bold text-slate-600">{fmt(m.revenue)}</span>
                       </div>
                       <Bar pct={m.revenue / maxMonthRevenue * 100} color="bg-gray-200" />
                     </div>
@@ -242,10 +242,10 @@ export default function AnalyticsPage() {
 
             {/* Top Customers */}
             {data.topCustomers.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+              <div className="bg-white rounded-sm shadow-sm border border-gray-100 overflow-hidden">
                 <div className="px-6 py-4 border-b border-gray-100">
-                  <h2 className="font-bold text-[#1C1C1C]">
-                    <Users className="w-4 h-4 inline mr-2 text-amber-600" />
+                  <h2 className="font-bold text-[#0f172a]">
+                    <Users className="w-4 h-4 inline mr-2 text-slate-500" />
                     Top Customers
                   </h2>
                   <p className="text-xs text-gray-500 mt-0.5">{PERIODS.find(p => p.key === period)?.label}</p>
@@ -265,10 +265,10 @@ export default function AnalyticsPage() {
                         <tr key={c.name} className="hover:bg-gray-50 transition-colors">
                           <td className="px-6 py-3 text-sm text-gray-400 tabular-nums">{i + 1}</td>
                           <td className="px-4 py-3">
-                            <div className="text-sm font-medium text-[#1C1C1C]">{c.name}</div>
+                            <div className="text-sm font-medium text-[#0f172a]">{c.name}</div>
                           </td>
                           <td className="px-4 py-3 text-right text-sm text-gray-500 tabular-nums">{c.orders}</td>
-                          <td className="px-6 py-3 text-right text-sm font-bold text-amber-700 tabular-nums">{fmt(c.revenue)}</td>
+                          <td className="px-6 py-3 text-right text-sm font-bold text-slate-600 tabular-nums">{fmt(c.revenue)}</td>
                         </tr>
                       ))}
                     </tbody>

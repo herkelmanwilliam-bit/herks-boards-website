@@ -36,7 +36,7 @@ export default function CartPage() {
       <div className="max-w-7xl mx-auto px-4 py-24 text-center">
         <h1 className="text-4xl font-bold mb-4">Your Cart is Empty</h1>
         <p className="mb-8 text-gray-600 text-lg">Looks like you haven't added any boards yet.</p>
-        <Link href="/shop" className="bg-amber-800 text-white px-8 py-4 rounded-lg font-bold hover:bg-amber-900 transition-colors inline-block">
+        <Link href="/shop" className="bg-slate-700 text-white px-8 py-4 rounded-sm font-bold hover:bg-slate-800 transition-colors inline-block">
           Explore Shop
         </Link>
       </div>
@@ -50,7 +50,7 @@ export default function CartPage() {
         <div className="lg:col-span-2 space-y-6">
           {items.map((item) => (
             <div key={item.product.id} className="flex gap-6 border-b pb-6">
-              <div className="w-24 h-24 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0 relative">
+              <div className="w-24 h-24 bg-gray-100 rounded-sm overflow-hidden flex-shrink-0 relative">
                 <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm">No Image</div>
                 {item.product.image && item.product.image !== '/images/placeholder-board.jpg' && (
                   <Image src={item.product.image} alt={item.product.name} fill className="object-cover" />
@@ -81,7 +81,7 @@ export default function CartPage() {
           ))}
         </div>
         
-        <div className="bg-gray-50 p-6 rounded-xl h-fit border border-gray-100">
+        <div className="bg-gray-50 p-6 rounded-sm h-fit border border-gray-100">
           <h2 className="text-xl font-bold mb-6">Order Summary</h2>
           <div className="flex justify-between mb-4">
             <span className="text-gray-600">Subtotal</span>
@@ -98,7 +98,7 @@ export default function CartPage() {
           <button 
             onClick={handleCheckout} 
             disabled={isCheckingOut}
-            className="w-full bg-amber-800 text-white py-4 rounded-lg font-bold hover:bg-amber-900 transition-colors disabled:opacity-50 text-lg shadow-sm"
+            className="w-full bg-slate-700 text-white py-4 rounded-sm font-bold hover:bg-slate-800 transition-colors disabled:opacity-50 text-lg shadow-sm"
           >
             {isCheckingOut ? 'Redirecting to Stripe...' : 'Checkout securely'}
           </button>

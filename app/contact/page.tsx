@@ -23,22 +23,22 @@ export default function ContactPage() {
           <div>
             <div className="space-y-6">
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-[#1C1C1C] rounded-xl flex items-center justify-center flex-shrink-0 border border-gray-800">
-                  <MapPin className="w-5 h-5 text-amber-500" />
+                <div className="w-10 h-10 bg-[#0f172a] rounded-sm flex items-center justify-center flex-shrink-0 border border-gray-800">
+                  <MapPin className="w-5 h-5 text-slate-400" />
                 </div>
                 <div>
-                  <div className="font-semibold text-[#1C1C1C] mb-1">Workshop Location</div>
-                  <div className="text-[#1C1C1C]/70">Iowa, USA</div>
+                  <div className="font-semibold text-[#0f172a] mb-1">Workshop Location</div>
+                  <div className="text-[#0f172a]/70">Iowa, USA</div>
                 </div>
               </div>
 
               <div className="flex items-start gap-4">
-                <div className="w-10 h-10 bg-[#1C1C1C] rounded-xl flex items-center justify-center flex-shrink-0 border border-gray-800">
-                  <Mail className="w-5 h-5 text-amber-500" />
+                <div className="w-10 h-10 bg-[#0f172a] rounded-sm flex items-center justify-center flex-shrink-0 border border-gray-800">
+                  <Mail className="w-5 h-5 text-slate-400" />
                 </div>
                 <div>
-                  <div className="font-semibold text-[#1C1C1C] mb-1">Email</div>
-                  <a href="mailto:info@herksboards.com" className="text-amber-700 hover:text-amber-800 font-medium">
+                  <div className="font-semibold text-[#0f172a] mb-1">Email</div>
+                  <a href="mailto:info@herksboards.com" className="text-slate-600 hover:text-slate-700 font-medium">
                     info@herksboards.com
                   </a>
                 </div>
@@ -46,12 +46,12 @@ export default function ContactPage() {
             </div>
 
             {/* Contact Form */}
-            <div className="mt-10 bg-[#1C1C1C] rounded-2xl p-8 border border-gray-800 shadow-xl">
+            <div className="mt-10 bg-[#0f172a] rounded-sm p-8 border border-gray-800 shadow-xl">
               <h3 className="text-white font-bold text-2xl mb-2">Get in Touch</h3>
               <p className="text-gray-400 mb-6">Have a question about a board or a custom build? Send a message.</p>
 
               {status === 'success' ? (
-                <div className="flex items-center gap-3 text-green-400 bg-green-400/10 border border-green-400/20 rounded-xl px-4 py-4">
+                <div className="flex items-center gap-3 text-green-400 bg-green-400/10 border border-green-400/20 rounded-sm px-4 py-4">
                   <CheckCircle className="w-5 h-5 flex-shrink-0" />
                   <p className="text-sm font-medium">Message sent! I'll get back to you soon.</p>
                 </div>
@@ -63,7 +63,7 @@ export default function ContactPage() {
                       name="name"
                       placeholder="Your name"
                       required
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-amber-500"
+                      className="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-slate-400"
                     />
                   </div>
 
@@ -73,7 +73,7 @@ export default function ContactPage() {
                       name="email"
                       placeholder="Email address"
                       required
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-amber-500"
+                      className="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-slate-400"
                     />
                   </div>
 
@@ -83,12 +83,12 @@ export default function ContactPage() {
                       rows={4}
                       placeholder="Your message..."
                       required
-                      className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-amber-500 resize-none"
+                      className="w-full bg-white/5 border border-white/10 rounded-sm px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-slate-400 resize-none"
                     />
                   </div>
 
                   {status === 'error' && (
-                    <div className="flex items-center gap-3 text-red-400 bg-red-400/10 rounded-xl px-4 py-3">
+                    <div className="flex items-center gap-3 text-red-400 bg-red-400/10 rounded-sm px-4 py-3">
                       <AlertCircle className="w-5 h-5 flex-shrink-0" />
                       <p className="text-sm">Something went wrong. Please try again later.</p>
                     </div>
@@ -97,7 +97,7 @@ export default function ContactPage() {
                   <button
                     type="submit"
                     disabled={status === 'submitting'}
-                    className="w-full bg-amber-700 text-white py-4 rounded-xl font-bold hover:bg-amber-600 transition-colors disabled:opacity-60 disabled:cursor-not-allowed mt-2"
+                    className="w-full bg-slate-600 text-white py-4 rounded-sm font-bold hover:bg-slate-500 transition-colors disabled:opacity-60 disabled:cursor-not-allowed mt-2"
                   >
                     {status === 'submitting' ? 'Sending...' : 'Send Message'}
                   </button>
@@ -107,7 +107,7 @@ export default function ContactPage() {
           </div>
 
           {/* Map (Generic Iowa for now) */}
-          <div className="rounded-2xl overflow-hidden shadow-lg h-[400px] lg:h-auto border border-gray-200">
+          <div className="rounded-sm overflow-hidden shadow-lg h-[400px] lg:h-auto border border-gray-200">
             <iframe
               title="Iowa Location"
               width="100%"

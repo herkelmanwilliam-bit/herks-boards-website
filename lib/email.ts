@@ -52,7 +52,7 @@ export async function sendOrderNotification(params: OrderNotificationParams) {
 <body style="margin:0;padding:0;background:#f9fafb;font-family:Arial,sans-serif;">
   <div style="max-width:600px;margin:32px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);">
     
-    <div style="background:#1C1C1C;padding:24px 32px;display:flex;align-items:center;">
+    <div style="background:#0f172a;padding:24px 32px;display:flex;align-items:center;">
       <div>
         <div style="color:#b45309;font-size:22px;font-weight:bold;">Herk's Boards</div>
         <div style="color:#aaa;font-size:13px;margin-top:4px;">New Order Received</div>
@@ -66,7 +66,7 @@ export async function sendOrderNotification(params: OrderNotificationParams) {
       </div>
 
       <div style="background:#f9f9f9;border-radius:8px;padding:16px 20px;margin-bottom:24px;">
-        <div style="font-size:15px;font-weight:bold;color:#1C1C1C;margin-bottom:12px;">Customer</div>
+        <div style="font-size:15px;font-weight:bold;color:#0f172a;margin-bottom:12px;">Customer</div>
         <table style="width:100%;font-size:14px;color:#444;border-collapse:collapse;">
           <tr><td style="padding:4px 0;width:100px;color:#888;">Name</td><td style="padding:4px 0;font-weight:bold;">${customerName}</td></tr>
           <tr><td style="padding:4px 0;color:#888;">Email</td><td style="padding:4px 0;">${customerEmail}</td></tr>
@@ -75,7 +75,7 @@ export async function sendOrderNotification(params: OrderNotificationParams) {
       </div>
 
       <div style="margin-bottom:24px;">
-        <div style="font-size:15px;font-weight:bold;color:#1C1C1C;margin-bottom:12px;">Order Items</div>
+        <div style="font-size:15px;font-weight:bold;color:#0f172a;margin-bottom:12px;">Order Items</div>
         <table style="width:100%;border-collapse:collapse;font-size:14px;">
           <thead>
             <tr style="background:#f9fafb;">
@@ -88,7 +88,7 @@ export async function sendOrderNotification(params: OrderNotificationParams) {
           <tbody>${itemRows}</tbody>
           <tfoot>
             <tr>
-              <td colspan="3" style="padding:12px;text-align:right;font-weight:bold;font-size:15px;color:#1C1C1C;">Order Total</td>
+              <td colspan="3" style="padding:12px;text-align:right;font-weight:bold;font-size:15px;color:#0f172a;">Order Total</td>
               <td style="padding:12px;text-align:right;font-weight:bold;font-size:15px;color:#b45309;">$${(total / 100).toFixed(2)}</td>
             </tr>
           </tfoot>
@@ -139,12 +139,12 @@ export async function sendCustomerConfirmation(params: OrderNotificationParams) 
 <head><meta charset="utf-8"></head>
 <body style="margin:0;padding:0;background:#f9fafb;font-family:Arial,sans-serif;">
   <div style="max-width:600px;margin:32px auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.08);">
-    <div style="background:#1C1C1C;padding:24px 32px;">
+    <div style="background:#0f172a;padding:24px 32px;">
       <div style="color:#b45309;font-size:22px;font-weight:bold;">Herk's Boards</div>
       <div style="color:#aaa;font-size:13px;margin-top:4px;">Order Confirmation</div>
     </div>
     <div style="padding:28px 32px;">
-      <h2 style="font-size:20px;color:#1C1C1C;margin:0 0 8px 0;">Thank you, ${customerName}!</h2>
+      <h2 style="font-size:20px;color:#0f172a;margin:0 0 8px 0;">Thank you, ${customerName}!</h2>
       <p style="font-size:15px;color:#555;margin:0 0 24px 0;">We've received your order and are preparing your handcrafted items.</p>
       
       <div style="background:#f9f9f9;border-radius:8px;padding:16px 20px;margin-bottom:24px;">
@@ -152,7 +152,7 @@ export async function sendCustomerConfirmation(params: OrderNotificationParams) 
       </div>
 
       <div style="margin-bottom:24px;">
-        <div style="font-size:15px;font-weight:bold;color:#1C1C1C;margin-bottom:12px;">Your Order</div>
+        <div style="font-size:15px;font-weight:bold;color:#0f172a;margin-bottom:12px;">Your Order</div>
         <table style="width:100%;border-collapse:collapse;font-size:14px;">
           <thead>
             <tr style="background:#f9fafb;">
@@ -165,7 +165,7 @@ export async function sendCustomerConfirmation(params: OrderNotificationParams) 
           <tbody>${itemRows}</tbody>
           <tfoot>
             <tr>
-              <td colspan="3" style="padding:12px;text-align:right;font-weight:bold;font-size:15px;color:#1C1C1C;">Order Total</td>
+              <td colspan="3" style="padding:12px;text-align:right;font-weight:bold;font-size:15px;color:#0f172a;">Order Total</td>
               <td style="padding:12px;text-align:right;font-weight:bold;font-size:15px;color:#b45309;">$${(total / 100).toFixed(2)}</td>
             </tr>
           </tfoot>

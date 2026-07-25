@@ -65,10 +65,10 @@ export default function FulfillmentPage() {
   if (orders.length === 0) {
     return (
       <div className="min-h-screen bg-gray-50 p-8">
-        <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-sm border border-gray-100 p-10 text-center">
-          <h2 className="text-2xl font-bold text-[#1C1C1C] mb-2">Fulfillment Queue Empty</h2>
+        <div className="max-w-4xl mx-auto bg-white rounded-sm shadow-sm border border-gray-100 p-10 text-center">
+          <h2 className="text-2xl font-bold text-[#0f172a] mb-2">Fulfillment Queue Empty</h2>
           <p className="text-gray-500 mb-6">No orders currently ready for shipping.</p>
-          <Link href="/admin" className="text-amber-600 font-semibold hover:underline">← Back to Admin</Link>
+          <Link href="/admin" className="text-slate-500 font-semibold hover:underline">← Back to Admin</Link>
         </div>
       </div>
     )
@@ -81,30 +81,30 @@ export default function FulfillmentPage() {
         
         <div className="mb-8 flex flex-col sm:flex-row justify-between sm:items-end gap-4">
           <div>
-            <Link href="/admin" className="text-amber-600 text-sm font-semibold hover:underline mb-4 inline-block">← Back to Admin</Link>
-            <h1 className="text-3xl font-bold text-[#1C1C1C] flex items-center gap-3">
-              <Package className="w-8 h-8 text-amber-600" />
+            <Link href="/admin" className="text-slate-500 text-sm font-semibold hover:underline mb-4 inline-block">← Back to Admin</Link>
+            <h1 className="text-3xl font-bold text-[#0f172a] flex items-center gap-3">
+              <Package className="w-8 h-8 text-slate-500" />
               Order Fulfillment
             </h1>
             <p className="text-gray-500 mt-1">Orders ready to pack and ship</p>
           </div>
-          <div className="bg-amber-100 text-amber-800 px-4 py-2 rounded-lg text-sm font-bold border border-amber-200">
+          <div className="bg-slate-50 text-slate-700 px-4 py-2 rounded-sm text-sm font-bold border border-slate-100">
             {orders.length} Orders to Ship
           </div>
         </div>
 
         <div className="grid gap-6">
           {orders.map(order => (
-            <div key={order.id} className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div key={order.id} className="bg-white rounded-sm shadow-sm border border-gray-200 overflow-hidden">
               <div className="bg-gray-50 border-b border-gray-200 px-6 py-4 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                 <div>
-                  <h3 className="font-bold text-lg text-[#1C1C1C]">{order.customerName}</h3>
+                  <h3 className="font-bold text-lg text-[#0f172a]">{order.customerName}</h3>
                   <p className="text-sm text-gray-500 font-mono">Order #{order.id.slice(-8).toUpperCase()}</p>
                 </div>
                 <div className="flex items-center gap-3">
                   <button 
                     onClick={() => markAsShipped(order.id)}
-                    className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors shadow-sm"
+                    className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-sm text-sm font-semibold hover:bg-green-700 transition-colors shadow-sm"
                   >
                     <Truck className="w-4 h-4" /> Mark Shipped
                   </button>
@@ -113,7 +113,7 @@ export default function FulfillmentPage() {
               <div className="p-6 grid sm:grid-cols-2 gap-8">
                 <div>
                   <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Shipping Address</h4>
-                  <p className="text-sm text-[#1C1C1C] bg-gray-50 p-3 rounded border border-gray-100">
+                  <p className="text-sm text-[#0f172a] bg-gray-50 p-3 rounded border border-gray-100">
                     {order.address}
                   </p>
                   
@@ -139,13 +139,13 @@ export default function FulfillmentPage() {
                   <ul className="space-y-2">
                     {order.items.map((item, idx) => (
                       <li key={idx} className="flex justify-between items-center text-sm border-b border-gray-50 pb-2">
-                        <span className="font-medium text-[#1C1C1C]">{item.name}</span>
-                        <span className="font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-100">x{item.quantity}</span>
+                        <span className="font-medium text-[#0f172a]">{item.name}</span>
+                        <span className="font-bold text-slate-600 bg-white px-2 py-0.5 rounded border border-slate-50">x{item.quantity}</span>
                       </li>
                     ))}
                   </ul>
                   <div className="mt-4 text-right">
-                    <Link href={`/admin/orders?id=${order.id}`} className="text-sm text-amber-600 hover:underline">
+                    <Link href={`/admin/orders?id=${order.id}`} className="text-sm text-slate-500 hover:underline">
                       View full order details →
                     </Link>
                   </div>

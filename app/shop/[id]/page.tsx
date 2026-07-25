@@ -66,7 +66,7 @@ export default function ProductPage() {
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
           <p className="text-gray-500 mb-4">Product not found.</p>
-          <Link href="/shop" className="text-amber-700 font-semibold">← Back to Shop</Link>
+          <Link href="/shop" className="text-slate-600 font-semibold">← Back to Shop</Link>
         </div>
       </div>
     )
@@ -92,11 +92,11 @@ export default function ProductPage() {
       {/* Breadcrumb */}
       <div className="bg-white border-b border-gray-100">
         <div className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-2 text-sm text-gray-500">
-          <Link href="/" className="hover:text-amber-700">Home</Link>
+          <Link href="/" className="hover:text-slate-600">Home</Link>
           <span>/</span>
-          <Link href="/shop" className="hover:text-amber-700">Shop</Link>
+          <Link href="/shop" className="hover:text-slate-600">Shop</Link>
           <span>/</span>
-          <span className="text-[#1C1C1C] font-medium">{product.name}</span>
+          <span className="text-[#0f172a] font-medium">{product.name}</span>
         </div>
       </div>
 
@@ -105,7 +105,7 @@ export default function ProductPage() {
 
           {/* Image */}
           <div className="relative">
-            <div className="aspect-square rounded-3xl overflow-hidden bg-gray-100 shadow-md flex items-center justify-center">
+            <div className="aspect-square rounded-sm overflow-hidden bg-gray-100 shadow-md flex items-center justify-center">
               {displayImage === '/images/placeholder-board.jpg' ? (
                 <span className="text-gray-400">No Image</span>
               ) : (
@@ -117,8 +117,8 @@ export default function ProductPage() {
               )}
             </div>
             {!inStock && (
-              <div className="absolute inset-0 bg-black/40 rounded-3xl flex items-center justify-center">
-                <span className="bg-white text-[#1C1C1C] font-bold px-6 py-3 rounded-full text-lg">Sold Out</span>
+              <div className="absolute inset-0 bg-black/40 rounded-sm flex items-center justify-center">
+                <span className="bg-white text-[#0f172a] font-bold px-6 py-3 rounded-full text-lg">Sold Out</span>
               </div>
             )}
             {lowStock && inStock && (
@@ -131,23 +131,23 @@ export default function ProductPage() {
           {/* Product Info */}
           <div className="flex flex-col gap-6">
             <div>
-              <p className="text-amber-700 font-semibold text-sm uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <p className="text-slate-600 font-semibold text-sm uppercase tracking-wider mb-2 flex items-center gap-1.5">
                 <Ruler className="w-4 h-4" /> {desc.specs}
               </p>
-              <h1 className="text-4xl font-bold text-[#1C1C1C] mb-2">{product.name}</h1>
+              <h1 className="text-4xl font-bold text-[#0f172a] mb-2">{product.name}</h1>
               <p className="text-xl text-gray-500 italic">{desc.tagline}</p>
             </div>
 
             {/* Price + add to cart */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <div className="bg-white rounded-sm p-6 shadow-sm border border-gray-100">
               <div className="flex items-baseline gap-2 mb-5">
-                <span className="text-3xl font-bold text-[#1C1C1C]">${price.toFixed(2)}</span>
+                <span className="text-3xl font-bold text-[#0f172a]">${price.toFixed(2)}</span>
               </div>
 
               {inStock ? (
                 <>
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden">
+                    <div className="flex items-center border border-gray-200 rounded-sm overflow-hidden">
                       <button
                         onClick={() => setQty(q => Math.max(1, q - 1))}
                         className="w-10 h-10 flex items-center justify-center hover:bg-gray-50 text-gray-600 transition-colors"
@@ -158,11 +158,11 @@ export default function ProductPage() {
                         className="w-10 h-10 flex items-center justify-center hover:bg-gray-50 text-gray-600 transition-colors"
                       >+</button>
                     </div>
-                    <span className="text-gray-400 text-sm">Total: <span className="text-[#1C1C1C] font-semibold">${(price * qty).toFixed(2)}</span></span>
+                    <span className="text-gray-400 text-sm">Total: <span className="text-[#0f172a] font-semibold">${(price * qty).toFixed(2)}</span></span>
                   </div>
                   <button
                     onClick={handleAddToCart}
-                    className="w-full flex items-center justify-center gap-2 bg-[#1C1C1C] text-amber-500 py-4 rounded-xl font-bold text-lg hover:bg-amber-700 hover:text-white transition-colors border border-amber-700/30"
+                    className="w-full flex items-center justify-center gap-2 bg-[#0f172a] text-slate-400 py-4 rounded-sm font-bold text-lg hover:bg-slate-600 hover:text-white transition-colors border border-slate-600/30"
                   >
                     <Plus className="w-5 h-5" /> Add to Cart
                   </button>
@@ -172,7 +172,7 @@ export default function ProductPage() {
                   <p className="text-gray-400 font-medium mb-3">
                     Currently sold out — check back soon.
                   </p>
-                  <Link href="/shop" className="text-amber-700 font-semibold hover:text-amber-800">Browse other boards →</Link>
+                  <Link href="/shop" className="text-slate-600 font-semibold hover:text-slate-700">Browse other boards →</Link>
                 </div>
               )}
             </div>
@@ -180,8 +180,8 @@ export default function ProductPage() {
             {/* Highlights */}
             <div className="grid grid-cols-2 gap-3">
               {desc.highlights.map((h, i) => (
-                <div key={i} className="flex items-start gap-2 bg-white rounded-xl p-3 shadow-sm border border-gray-50">
-                  <CheckCircle className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                <div key={i} className="flex items-start gap-2 bg-white rounded-sm p-3 shadow-sm border border-gray-50">
+                  <CheckCircle className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
                   <span className="text-sm text-gray-600">{h}</span>
             </div>
               ))}
@@ -191,28 +191,28 @@ export default function ProductPage() {
 
         {/* Story section */}
         <div className="mt-16 max-w-3xl">
-          <h2 className="text-2xl font-bold text-[#1C1C1C] mb-4">About This Board</h2>
+          <h2 className="text-2xl font-bold text-[#0f172a] mb-4">About This Board</h2>
           <p className="text-gray-600 leading-relaxed text-lg whitespace-pre-wrap">{displayDesc}</p>
         </div>
 
         {/* Board icons */}
         <div className="mt-10 flex flex-wrap gap-4">
-          <div className="flex items-center gap-2 bg-white rounded-xl px-4 py-3 shadow-sm border border-gray-100">
-            <ShieldCheck className="w-5 h-5 text-amber-600" />
+          <div className="flex items-center gap-2 bg-white rounded-sm px-4 py-3 shadow-sm border border-gray-100">
+            <ShieldCheck className="w-5 h-5 text-slate-500" />
             <span className="text-sm font-medium text-gray-600">Food-Safe Finish</span>
           </div>
-          <div className="flex items-center gap-2 bg-white rounded-xl px-4 py-3 shadow-sm border border-gray-100">
-            <Ruler className="w-5 h-5 text-amber-600" />
+          <div className="flex items-center gap-2 bg-white rounded-sm px-4 py-3 shadow-sm border border-gray-100">
+            <Ruler className="w-5 h-5 text-slate-500" />
             <span className="text-sm font-medium text-gray-600">Premium Hardwood</span>
           </div>
-          <div className="flex items-center gap-2 bg-white rounded-xl px-4 py-3 shadow-sm border border-gray-100">
-            <Truck className="w-5 h-5 text-amber-600" />
+          <div className="flex items-center gap-2 bg-white rounded-sm px-4 py-3 shadow-sm border border-gray-100">
+            <Truck className="w-5 h-5 text-slate-500" />
             <span className="text-sm font-medium text-gray-600">Ships Nationwide</span>
           </div>
         </div>
 
         <div className="mt-12">
-          <Link href="/shop" className="inline-flex items-center gap-2 text-amber-700 font-semibold hover:text-amber-800">
+          <Link href="/shop" className="inline-flex items-center gap-2 text-slate-600 font-semibold hover:text-slate-700">
             <ArrowLeft className="w-4 h-4" /> Back to Shop
           </Link>
         </div>

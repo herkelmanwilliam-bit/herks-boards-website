@@ -141,15 +141,15 @@ export default function OpenOrdersPage() {
   <style>
     @page { size: 4in 6in; margin: 0.3in; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: Arial, sans-serif; }
-    body { background: white; color: #1C1C1C; font-size: 11pt; }
+    body { background: white; color: #0f172a; font-size: 11pt; }
     .header { text-align: center; border-bottom: 2px solid #b45309; padding-bottom: 8px; margin-bottom: 10px; }
-    .logo { font-size: 18pt; font-weight: 900; color: #1C1C1C; letter-spacing: -0.5px; }
+    .logo { font-size: 18pt; font-weight: 900; color: #0f172a; letter-spacing: -0.5px; }
     .logo span { color: #b45309; }
     .customer { margin-bottom: 10px; padding: 8px; background: #f9fafb; border-radius: 6px; }
     .customer .name { font-size: 14pt; font-weight: 800; }
     .customer .meta { font-size: 9pt; color: #555; margin-top: 3px; }
     table { width: 100%; border-collapse: collapse; margin: 8px 0; }
-    thead th { background: #1C1C1C; color: #b45309; padding: 5px 8px; font-size: 9pt; text-align: left; }
+    thead th { background: #0f172a; color: #b45309; padding: 5px 8px; font-size: 9pt; text-align: left; }
     thead th:nth-child(2), thead th:nth-child(3), thead th:nth-child(4) { text-align: center; }
     thead th:nth-child(3), thead th:nth-child(4) { text-align: right; }
     tbody tr:nth-child(even) td { background: #fafafa; }
@@ -168,7 +168,7 @@ export default function OpenOrdersPage() {
     <div class="meta">${customerEmail}</div>
     <div class="meta">${dateStr}</div>
   </div>
-  <div style="margin: 6px 0; font-size: 10pt; font-weight: 700; padding: 3px 10px; background: #1C1C1C; color: white; border-radius: 4px;">
+  <div style="margin: 6px 0; font-size: 10pt; font-weight: 700; padding: 3px 10px; background: #0f172a; color: white; border-radius: 4px;">
     Ship to: ${order.address}
   </div>
   <table>
@@ -189,7 +189,7 @@ export default function OpenOrdersPage() {
     </tbody>
   </table>
   <div style="font-size: 8pt; color: #aaa; margin-top: 4px;">Order: ${order.id.slice(0, 24)}...</div>
-  <div style="margin-top:14px;text-align:center;font-size:13pt;font-weight:900;color:#1C1C1C;line-height:1.6;">
+  <div style="margin-top:14px;text-align:center;font-size:13pt;font-weight:900;color:#0f172a;line-height:1.6;">
     Thank you for your order!
   </div>
   <div class="footer">herksboards.com</div>
@@ -208,22 +208,22 @@ export default function OpenOrdersPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-[#1C1C1C] border-b border-amber-900/20 px-6 py-4">
+      <div className="bg-[#0f172a] border-b border-slate-800/20 px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-4">
-            <Link href="/admin" className="text-amber-500 hover:text-amber-400 text-sm">← Admin</Link>
+            <Link href="/admin" className="text-slate-400 hover:text-slate-300 text-sm">← Admin</Link>
             <h1 className="text-white font-bold text-xl">📥 Open Orders</h1>
-            <span className="bg-amber-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">{totalOpen}</span>
+            <span className="bg-slate-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">{totalOpen}</span>
           </div>
           <div className="flex items-center gap-4">
             <div className="text-right">
-              <div className="text-amber-500 font-bold text-lg">{fmt(totalValue)}</div>
+              <div className="text-slate-400 font-bold text-lg">{fmt(totalValue)}</div>
               <div className="text-white/40 text-xs">total open value</div>
             </div>
-            <button onClick={load} className="text-white/60 hover:text-white p-2 rounded-lg hover:bg-white/10 transition-colors">
+            <button onClick={load} className="text-white/60 hover:text-white p-2 rounded-sm hover:bg-white/10 transition-colors">
               <RefreshCw className="w-4 h-4" />
             </button>
-            <Link href="/admin/orders/closed" className="bg-amber-500/20 text-amber-500 border border-amber-500/30 px-4 py-2 rounded-lg text-sm font-medium hover:bg-amber-500/30 transition-colors">
+            <Link href="/admin/orders/closed" className="bg-slate-400/20 text-slate-400 border border-slate-400/30 px-4 py-2 rounded-sm text-sm font-medium hover:bg-slate-400/30 transition-colors">
               View History →
             </Link>
           </div>
@@ -231,48 +231,48 @@ export default function OpenOrdersPage() {
       </div>
 
       <div className="max-w-6xl mx-auto px-6 py-8">
-        {loading && <div className="text-center py-20 text-[#1C1C1C]/40">Loading orders...</div>}
+        {loading && <div className="text-center py-20 text-[#0f172a]/40">Loading orders...</div>}
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-xl p-4 flex items-center gap-3 text-red-700 mb-6">
+          <div className="bg-red-50 border border-red-200 rounded-sm p-4 flex items-center gap-3 text-red-700 mb-6">
             <AlertCircle className="w-5 h-5 flex-shrink-0" />{error}
           </div>
         )}
         {!loading && customers.length === 0 && (
           <div className="text-center py-20">
-            <Package className="w-16 h-16 text-[#1C1C1C]/20 mx-auto mb-4" />
-            <p className="text-[#1C1C1C]/40 text-lg">No open orders right now.</p>
+            <Package className="w-16 h-16 text-[#0f172a]/20 mx-auto mb-4" />
+            <p className="text-[#0f172a]/40 text-lg">No open orders right now.</p>
           </div>
         )}
 
         <div className="space-y-4">
           {customers.map(customer => (
-            <div key={customer.email} className="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+            <div key={customer.email} className="bg-white rounded-sm shadow-sm border border-gray-200 overflow-hidden">
               <button
                 onClick={() => toggleCustomer(customer.email)}
                 className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-amber-600 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                  <div className="w-10 h-10 bg-slate-500 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
                     {customer.name.charAt(0).toUpperCase()}
                   </div>
                   <div className="text-left">
-                    <div className="font-bold text-[#1C1C1C] text-lg">{customer.name}</div>
-                    <div className="flex items-center gap-3 text-sm text-[#1C1C1C]/50 mt-0.5">
+                    <div className="font-bold text-[#0f172a] text-lg">{customer.name}</div>
+                    <div className="flex items-center gap-3 text-sm text-[#0f172a]/50 mt-0.5">
                       <span className="flex items-center gap-1"><Mail className="w-3 h-3" />{customer.email}</span>
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
                   <div className="text-right hidden sm:block">
-                    <div className="text-sm font-semibold text-[#1C1C1C]">{fmt(customer.lifetimeValue)} lifetime</div>
-                    <div className="text-xs text-[#1C1C1C]/40">{customer.orderCount} total order{customer.orderCount !== 1 ? 's' : ''}</div>
+                    <div className="text-sm font-semibold text-[#0f172a]">{fmt(customer.lifetimeValue)} lifetime</div>
+                    <div className="text-xs text-[#0f172a]/40">{customer.orderCount} total order{customer.orderCount !== 1 ? 's' : ''}</div>
                   </div>
-                  <div className="bg-amber-100 text-amber-800 text-sm font-bold px-3 py-1 rounded-full border border-amber-200">
+                  <div className="bg-slate-50 text-slate-700 text-sm font-bold px-3 py-1 rounded-full border border-slate-100">
                     {customer.orders.length} open
                   </div>
                   {expanded.has(customer.email)
-                    ? <ChevronUp className="w-5 h-5 text-[#1C1C1C]/40" />
-                    : <ChevronDown className="w-5 h-5 text-[#1C1C1C]/40" />
+                    ? <ChevronUp className="w-5 h-5 text-[#0f172a]/40" />
+                    : <ChevronDown className="w-5 h-5 text-[#0f172a]/40" />
                   }
                 </div>
               </button>
@@ -280,14 +280,14 @@ export default function OpenOrdersPage() {
               {expanded.has(customer.email) && (
                 <div className="border-t border-gray-100">
                   <div className="px-6 py-3 bg-gray-50 flex flex-wrap gap-6 text-sm">
-                    <span className="flex items-center gap-1.5 text-[#1C1C1C]/60">
-                      <DollarSign className="w-3.5 h-3.5" />Lifetime: <strong className="text-[#1C1C1C]">{fmt(customer.lifetimeValue)}</strong>
+                    <span className="flex items-center gap-1.5 text-[#0f172a]/60">
+                      <DollarSign className="w-3.5 h-3.5" />Lifetime: <strong className="text-[#0f172a]">{fmt(customer.lifetimeValue)}</strong>
                     </span>
-                    <span className="flex items-center gap-1.5 text-[#1C1C1C]/60">
-                      <Clock className="w-3.5 h-3.5" />First: <strong className="text-[#1C1C1C]">{fmtDate(customer.firstOrderAt)}</strong>
+                    <span className="flex items-center gap-1.5 text-[#0f172a]/60">
+                      <Clock className="w-3.5 h-3.5" />First: <strong className="text-[#0f172a]">{fmtDate(customer.firstOrderAt)}</strong>
                     </span>
-                    <span className="flex items-center gap-1.5 text-[#1C1C1C]/60">
-                      <Package className="w-3.5 h-3.5" />Last: <strong className="text-[#1C1C1C]">{fmtDate(customer.lastOrderAt)}</strong>
+                    <span className="flex items-center gap-1.5 text-[#0f172a]/60">
+                      <Package className="w-3.5 h-3.5" />Last: <strong className="text-[#0f172a]">{fmtDate(customer.lastOrderAt)}</strong>
                     </span>
                   </div>
 
@@ -304,34 +304,34 @@ export default function OpenOrdersPage() {
                               <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${STATUS_COLORS[currentStatus]}`}>
                                 {STATUS_LABELS[currentStatus]}
                               </span>
-                              <span className="text-xs text-[#1C1C1C]/40 font-mono">{order.id.slice(0, 18)}...</span>
-                              <span className="text-xs text-[#1C1C1C]/40">{fmtDate(order.createdAt)}</span>
+                              <span className="text-xs text-[#0f172a]/40 font-mono">{order.id.slice(0, 18)}...</span>
+                              <span className="text-xs text-[#0f172a]/40">{fmtDate(order.createdAt)}</span>
                             </div>
-                            <div className="flex items-center gap-2 mt-2 text-sm text-[#1C1C1C]/60">
+                            <div className="flex items-center gap-2 mt-2 text-sm text-[#0f172a]/60">
                               <Truck className="w-3.5 h-3.5" />
                               <span>Ship to: {order.address}</span>
                             </div>
                           </div>
                           <div className="text-right flex flex-col items-end gap-2">
-                            <div className="text-xl font-bold text-amber-700">{fmt(order.total)}</div>
+                            <div className="text-xl font-bold text-slate-600">{fmt(order.total)}</div>
                             <button
                               onClick={() => printPackingSlip(order, customer.name, customer.email)}
-                              className="bg-[#1C1C1C] text-white px-3 py-1.5 rounded-lg text-xs font-bold hover:bg-[#333] transition-colors flex items-center gap-1"
+                              className="bg-[#0f172a] text-white px-3 py-1.5 rounded-sm text-xs font-bold hover:bg-[#333] transition-colors flex items-center gap-1"
                             >
                               🖨️ Packing Slip
                             </button>
                           </div>
                         </div>
 
-                        <div className="bg-gray-50 rounded-xl p-3 mb-4 border border-gray-100">
+                        <div className="bg-gray-50 rounded-sm p-3 mb-4 border border-gray-100">
                           <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Items Ordered</div>
                           <div className="space-y-2">
                             {order.items.map((item, i) => (
                               <div key={i} className="flex items-center justify-between gap-2">
-                                <span className="text-sm text-[#1C1C1C]">
-                                  <span className="font-bold text-amber-700">{item.quantity}x</span> {item.name}
+                                <span className="text-sm text-[#0f172a]">
+                                  <span className="font-bold text-slate-600">{item.quantity}x</span> {item.name}
                                 </span>
-                                <span className="text-sm text-[#1C1C1C]/60 tabular-nums">
+                                <span className="text-sm text-[#0f172a]/60 tabular-nums">
                                   {fmt(item.unitAmount * item.quantity)}
                                 </span>
                               </div>
@@ -341,11 +341,11 @@ export default function OpenOrdersPage() {
 
                         <div className="grid sm:grid-cols-2 gap-3 mb-4">
                           <div>
-                            <label className="block text-xs font-semibold text-[#1C1C1C]/50 uppercase tracking-wide mb-1">Status</label>
+                            <label className="block text-xs font-semibold text-[#0f172a]/50 uppercase tracking-wide mb-1">Status</label>
                             <select
                               value={currentStatus}
                               onChange={e => patchLocal(order.id, 'status', e.target.value)}
-                              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:border-amber-500"
+                              className="w-full border border-gray-200 rounded-sm px-3 py-2 text-sm bg-white focus:outline-none focus:border-slate-400"
                             >
                               {(['new', 'preparing', 'shipped', 'cancelled'] as OrderStatus[]).map(s => (
                                 <option key={s} value={s}>{STATUS_LABELS[s]}</option>
@@ -353,19 +353,19 @@ export default function OpenOrdersPage() {
                             </select>
                           </div>
                           <div>
-                            <label className="block text-xs font-semibold text-[#1C1C1C]/50 uppercase tracking-wide mb-1">Tracking Number</label>
+                            <label className="block text-xs font-semibold text-[#0f172a]/50 uppercase tracking-wide mb-1">Tracking Number</label>
                             <input 
                               type="text"
                               value={local.trackingNumber ?? order.trackingNumber ?? ''}
                               onChange={e => patchLocal(order.id, 'trackingNumber', e.target.value)}
                               placeholder="e.g. 1Z9999999999999999"
-                              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:border-amber-500"
+                              className="w-full border border-gray-200 rounded-sm px-3 py-2 text-sm bg-white focus:outline-none focus:border-slate-400"
                             />
                           </div>
                         </div>
 
                         <div className="mb-4">
-                          <label className="block text-xs font-semibold text-[#1C1C1C]/50 uppercase tracking-wide mb-1">
+                          <label className="block text-xs font-semibold text-[#0f172a]/50 uppercase tracking-wide mb-1">
                             <FileText className="w-3 h-3 inline mr-1" />Internal Notes
                           </label>
                           <textarea
@@ -373,7 +373,7 @@ export default function OpenOrdersPage() {
                             value={local.internalNotes ?? order.internalNotes ?? ''}
                             onChange={e => patchLocal(order.id, 'internalNotes', e.target.value)}
                             placeholder="Wood selection, dimensions, timeline..."
-                            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:border-amber-500 resize-none"
+                            className="w-full border border-gray-200 rounded-sm px-3 py-2 text-sm bg-white focus:outline-none focus:border-slate-400 resize-none"
                           />
                         </div>
 
@@ -382,7 +382,7 @@ export default function OpenOrdersPage() {
                             <button
                               onClick={() => saveOrder(order)}
                               disabled={saving === order.id}
-                              className="bg-amber-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-amber-700 disabled:opacity-60 transition-colors"
+                              className="bg-slate-500 text-white px-4 py-2 rounded-sm text-sm font-bold hover:bg-slate-600 disabled:opacity-60 transition-colors"
                             >
                               {saving === order.id ? 'Saving...' : '💾 Save Changes'}
                             </button>
@@ -401,13 +401,13 @@ export default function OpenOrdersPage() {
                               <button
                                 onClick={() => closeShipped(order.id)}
                                 disabled={saving === order.id}
-                                className="bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-bold hover:bg-green-700 disabled:opacity-60 transition-colors flex items-center gap-1"
+                                className="bg-green-600 text-white px-4 py-2 rounded-sm text-sm font-bold hover:bg-green-700 disabled:opacity-60 transition-colors flex items-center gap-1"
                               >
                                 <Truck className="w-4 h-4" /> Mark Shipped
                               </button>
                               <button
                                 onClick={() => setCancelModal({ orderId: order.id, reason: '' })}
-                                className="bg-red-50 text-red-600 border border-red-200 px-4 py-2 rounded-lg text-sm font-semibold hover:bg-red-100 transition-colors"
+                                className="bg-red-50 text-red-600 border border-red-200 px-4 py-2 rounded-sm text-sm font-semibold hover:bg-red-100 transition-colors"
                               >
                                 <X className="w-3.5 h-3.5 inline mr-1" />Cancel
                               </button>
@@ -415,7 +415,7 @@ export default function OpenOrdersPage() {
                                 href={`https://dashboard.stripe.com/payments/${order.stripeSessionId}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-xs text-amber-600 hover:text-amber-800 transition-colors ml-auto font-semibold"
+                                className="text-xs text-slate-500 hover:text-slate-700 transition-colors ml-auto font-semibold"
                               >
                                 View in Stripe →
                               </a>
@@ -434,21 +434,21 @@ export default function OpenOrdersPage() {
 
       {cancelModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl p-6 max-w-md w-full shadow-2xl">
-            <h3 className="text-lg font-bold text-[#1C1C1C] mb-3">❌ Cancel Order</h3>
-            <p className="text-[#1C1C1C]/60 text-sm mb-4">This will move the order to history as Cancelled. Reason (optional):</p>
+          <div className="bg-white rounded-sm p-6 max-w-md w-full shadow-2xl">
+            <h3 className="text-lg font-bold text-[#0f172a] mb-3">❌ Cancel Order</h3>
+            <p className="text-[#0f172a]/60 text-sm mb-4">This will move the order to history as Cancelled. Reason (optional):</p>
             <textarea
               rows={3}
               value={cancelModal.reason}
               onChange={e => setCancelModal({ ...cancelModal, reason: e.target.value })}
               placeholder="e.g. Customer request"
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 resize-none mb-4"
+              className="w-full border border-gray-200 rounded-sm px-4 py-3 text-sm focus:outline-none focus:border-slate-400 resize-none mb-4"
             />
             <div className="flex gap-3">
-              <button onClick={() => setCancelModal(null)} className="flex-1 border border-gray-200 text-gray-600 py-2 rounded-xl text-sm font-semibold hover:bg-gray-50 transition-colors">
+              <button onClick={() => setCancelModal(null)} className="flex-1 border border-gray-200 text-gray-600 py-2 rounded-sm text-sm font-semibold hover:bg-gray-50 transition-colors">
                 Keep Order
               </button>
-              <button onClick={confirmCancel} disabled={saving !== null} className="flex-1 bg-red-600 text-white py-2 rounded-xl text-sm font-bold hover:bg-red-700 disabled:opacity-60 transition-colors">
+              <button onClick={confirmCancel} disabled={saving !== null} className="flex-1 bg-red-600 text-white py-2 rounded-sm text-sm font-bold hover:bg-red-700 disabled:opacity-60 transition-colors">
                 {saving ? 'Cancelling...' : 'Cancel Order'}
               </button>
             </div>

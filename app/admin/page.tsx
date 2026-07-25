@@ -150,8 +150,8 @@ export default function AdminPage() {
 
   if (!authed) {
     return (
-      <div className="min-h-screen bg-[#1C1C1C] flex items-center justify-center px-4">
-        <div className="bg-[#2a2a2a] rounded-2xl p-8 w-full max-w-sm shadow-2xl border border-amber-500/20">
+      <div className="min-h-screen bg-[#0f172a] flex items-center justify-center px-4">
+        <div className="bg-[#2a2a2a] rounded-sm p-8 w-full max-w-sm shadow-2xl border border-slate-400/20">
           <div className="text-center mb-6">
             <span className="text-4xl">🪵</span>
             <h1 className="text-2xl font-bold text-white mt-2">Herk's Boards Admin</h1>
@@ -163,7 +163,7 @@ export default function AdminPage() {
               placeholder="Username"
               value={username}
               onChange={e => setUsername(e.target.value)}
-              className="bg-[#1C1C1C] text-white border border-amber-500/30 rounded-xl px-4 py-3 focus:outline-none focus:border-amber-500"
+              className="bg-[#0f172a] text-white border border-slate-400/30 rounded-sm px-4 py-3 focus:outline-none focus:border-slate-400"
               autoFocus
             />
             <input
@@ -171,12 +171,12 @@ export default function AdminPage() {
               placeholder="Password"
               value={password}
               onChange={e => setPassword(e.target.value)}
-              className="bg-[#1C1C1C] text-white border border-amber-500/30 rounded-xl px-4 py-3 focus:outline-none focus:border-amber-500"
+              className="bg-[#0f172a] text-white border border-slate-400/30 rounded-sm px-4 py-3 focus:outline-none focus:border-slate-400"
             />
             {loginError && <p className="text-red-400 text-sm">{loginError}</p>}
             <button
               type="submit"
-              className="bg-amber-600 text-white font-bold py-3 rounded-xl hover:bg-amber-700 transition-colors"
+              className="bg-slate-500 text-white font-bold py-3 rounded-sm hover:bg-slate-600 transition-colors"
             >
               Log In
             </button>
@@ -191,19 +191,19 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="bg-[#1C1C1C] px-6 py-4 flex items-center justify-between border-b border-amber-900/20">
+      <div className="bg-[#0f172a] px-6 py-4 flex items-center justify-between border-b border-slate-800/20">
         <div className="flex items-center gap-3">
           <span className="text-2xl">🪵</span>
           <div>
             <h1 className="text-white font-bold text-lg leading-tight">Herk's Boards Admin</h1>
-            <p className="text-amber-500 text-xs">Inventory Management</p>
+            <p className="text-slate-400 text-xs">Inventory Management</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
           <a
             href="/shop"
             target="_blank"
-            className="text-amber-500 text-sm hover:underline"
+            className="text-slate-400 text-sm hover:underline"
           >
             View Shop →
           </a>
@@ -217,52 +217,52 @@ export default function AdminPage() {
       </div>
 
       <div className="max-w-5xl mx-auto px-4 py-8">
-        <div className="mb-4 bg-amber-600 rounded-2xl shadow-sm px-6 py-4 flex items-center justify-between text-white">
+        <div className="mb-4 bg-slate-500 rounded-sm shadow-sm px-6 py-4 flex items-center justify-between text-white">
           <div>
             <p className="font-bold text-sm">📊 Revenue & Analytics</p>
             <p className="text-white/80 text-xs mt-0.5">Sales by product, period & customer</p>
           </div>
           <a
             href="/admin/analytics"
-            className="bg-[#1C1C1C] text-amber-500 font-bold px-5 py-2.5 rounded-xl text-sm hover:bg-[#2a2a2a] transition-colors whitespace-nowrap"
+            className="bg-[#0f172a] text-slate-400 font-bold px-5 py-2.5 rounded-sm text-sm hover:bg-[#2a2a2a] transition-colors whitespace-nowrap"
           >
             View Analytics →
           </a>
         </div>
 
-        <div className="mb-6 bg-[#1C1C1C] rounded-2xl shadow-sm border border-amber-900/20 px-6 py-4">
-          <h2 className="text-amber-500 text-xs font-bold uppercase tracking-widest mb-3">Order Management</h2>
+        <div className="mb-6 bg-[#0f172a] rounded-sm shadow-sm border border-slate-800/20 px-6 py-4">
+          <h2 className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-3">Order Management</h2>
           <div className="flex flex-wrap gap-3">
             <a
               href="/admin/orders"
-              className="flex items-center gap-2 bg-amber-500/10 text-amber-500 border border-amber-500/30 px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-amber-500 hover:text-[#1C1C1C] transition-colors"
+              className="flex items-center gap-2 bg-slate-400/10 text-slate-400 border border-slate-400/30 px-5 py-2.5 rounded-sm text-sm font-semibold hover:bg-slate-400 hover:text-[#0f172a] transition-colors"
             >
               📥 Open Orders
             </a>
             <a
               href="/admin/build-queue"
-              className="flex items-center gap-2 bg-blue-700/20 text-blue-400 border border-blue-600/40 px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-700 hover:text-white transition-colors"
+              className="flex items-center gap-2 bg-blue-700/20 text-blue-400 border border-blue-600/40 px-5 py-2.5 rounded-sm text-sm font-semibold hover:bg-blue-700 hover:text-white transition-colors"
             >
               🪚 Build Queue
             </a>
             <a
               href="/admin/fulfillment"
-              className="flex items-center gap-2 bg-green-700/20 text-green-400 border border-green-600/40 px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-green-700 hover:text-white transition-colors"
+              className="flex items-center gap-2 bg-green-700/20 text-green-400 border border-green-600/40 px-5 py-2.5 rounded-sm text-sm font-semibold hover:bg-green-700 hover:text-white transition-colors"
             >
               📦 Fulfillment / Shipping
             </a>
             <a
               href="/admin/orders/closed"
-              className="flex items-center gap-2 bg-white/5 text-white/70 border border-white/10 px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-white/10 hover:text-white transition-colors"
+              className="flex items-center gap-2 bg-white/5 text-white/70 border border-white/10 px-5 py-2.5 rounded-sm text-sm font-semibold hover:bg-white/10 hover:text-white transition-colors"
             >
               📦 Closed Orders
             </a>
           </div>
         </div>
 
-        <div className="mb-8 bg-white rounded-2xl shadow-sm border border-gray-100 px-6 py-5 flex items-center justify-between">
+        <div className="mb-8 bg-white rounded-sm shadow-sm border border-gray-100 px-6 py-5 flex items-center justify-between">
           <div>
-            <h2 className="font-semibold text-[#1C1C1C]">📧 Email System</h2>
+            <h2 className="font-semibold text-[#0f172a]">📧 Email System</h2>
             <p className="text-sm text-gray-500 mt-0.5">Send a test order confirmation to info@herksboards.com</p>
             {testEmailMsg && (
               <p className={`text-sm mt-1 font-medium ${testEmailStatus === 'error' ? 'text-red-500' : 'text-green-600'}`}>{testEmailMsg}</p>
@@ -271,7 +271,7 @@ export default function AdminPage() {
           <button
             onClick={sendTestEmail}
             disabled={testEmailStatus === 'sending'}
-            className="bg-[#1C1C1C] text-amber-500 font-semibold px-5 py-2.5 rounded-xl hover:bg-amber-500 hover:text-[#1C1C1C] transition-colors disabled:opacity-50 text-sm whitespace-nowrap"
+            className="bg-[#0f172a] text-slate-400 font-semibold px-5 py-2.5 rounded-sm hover:bg-slate-400 hover:text-[#0f172a] transition-colors disabled:opacity-50 text-sm whitespace-nowrap"
           >
             {testEmailStatus === 'sending' ? 'Sending...' : testEmailStatus === 'sent' ? '✅ Sent!' : 'Send Test Email'}
           </button>
@@ -285,8 +285,8 @@ export default function AdminPage() {
             if (catProducts.length === 0) return null
             return (
               <div key={cat} className="mb-10">
-                <h2 className="text-xl font-bold text-[#1C1C1C] mb-4">{categoryLabels[cat]}</h2>
-                <div className="bg-white rounded-2xl shadow-sm overflow-hidden border border-gray-100">
+                <h2 className="text-xl font-bold text-[#0f172a] mb-4">{categoryLabels[cat]}</h2>
+                <div className="bg-white rounded-sm shadow-sm overflow-hidden border border-gray-100">
                   <table className="w-full">
                     <thead>
                       <tr className="border-b border-gray-100 bg-gray-50">
@@ -309,13 +309,13 @@ export default function AdminPage() {
                             <tr className={`border-b border-gray-50 last:border-0 ${i % 2 === 0 ? '' : 'bg-gray-50/50'}`}>
                               <td className="px-5 py-3">
                                 {displayImage === '/images/placeholder-board.jpg' ? (
-                                  <div className="w-8 h-8 rounded-lg bg-gray-200" />
+                                  <div className="w-8 h-8 rounded-sm bg-gray-200" />
                                 ) : (
-                                  <img src={displayImage} alt="" className="w-8 h-8 rounded-lg object-cover" />
+                                  <img src={displayImage} alt="" className="w-8 h-8 rounded-sm object-cover" />
                                 )}
                               </td>
                               <td className="px-5 py-3">
-                                <p className="font-medium text-[#1C1C1C] text-sm">{product.name}</p>
+                                <p className="font-medium text-[#0f172a] text-sm">{product.name}</p>
                                 <p className="text-gray-400 text-xs">${product.price} / {product.unit}</p>
                               </td>
                               <td className="px-5 py-3">
@@ -328,7 +328,7 @@ export default function AdminPage() {
                                       ...prev,
                                       [product.id]: { ...getItem(product.id), qty: parseInt(e.target.value) || 0 }
                                     }))}
-                                    className="w-20 border border-gray-200 rounded-lg px-2 py-1.5 text-sm text-center focus:outline-none focus:border-amber-500"
+                                    className="w-20 border border-gray-200 rounded-sm px-2 py-1.5 text-sm text-center focus:outline-none focus:border-slate-400"
                                   />
                                   <span className="text-gray-400 text-xs">{item.qty === -1 ? '∞' : ''}</span>
                                 </div>
@@ -348,7 +348,7 @@ export default function AdminPage() {
                                         setPriceInputs(prev => ({ ...prev, [product.id]: String(item.price ?? product.price) }))
                                       }
                                     }}
-                                    className="w-20 border border-gray-200 rounded-lg px-2 py-1.5 text-sm text-center focus:outline-none focus:border-amber-500"
+                                    className="w-20 border border-gray-200 rounded-sm px-2 py-1.5 text-sm text-center focus:outline-none focus:border-slate-400"
                                   />
                                 </div>
                                 <p className="text-gray-400 text-xs mt-1">per {product.unit}</p>
@@ -360,7 +360,7 @@ export default function AdminPage() {
                                       ...prev,
                                       [product.id]: { ...getItem(product.id), published: !item.published }
                                     }))}
-                                    className={`w-10 h-6 rounded-full transition-colors relative cursor-pointer ${item.published ? 'bg-amber-500' : 'bg-gray-300'}`}
+                                    className={`w-10 h-6 rounded-full transition-colors relative cursor-pointer ${item.published ? 'bg-slate-400' : 'bg-gray-300'}`}
                                   >
                                     <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${item.published ? 'translate-x-5' : 'translate-x-1'}`} />
                                   </div>
@@ -370,7 +370,7 @@ export default function AdminPage() {
                               <td className="px-5 py-3 text-right">
                                 <button
                                   onClick={() => setExpandedRow(expandedRow === product.id ? null : product.id)}
-                                  className="text-gray-500 text-sm font-semibold hover:text-amber-600 mr-4"
+                                  className="text-gray-500 text-sm font-semibold hover:text-slate-500 mr-4"
                                 >
                                   {expandedRow === product.id ? 'Close' : 'Edit Info'}
                                 </button>
@@ -380,7 +380,7 @@ export default function AdminPage() {
                                   <button
                                     onClick={() => saveItem(product.id, getItem(product.id), product.price)}
                                     disabled={saving === product.id}
-                                    className="bg-[#1C1C1C] text-amber-500 text-sm font-semibold px-4 py-1.5 rounded-lg hover:bg-amber-600 hover:text-white transition-colors disabled:opacity-50"
+                                    className="bg-[#0f172a] text-slate-400 text-sm font-semibold px-4 py-1.5 rounded-sm hover:bg-slate-500 hover:text-white transition-colors disabled:opacity-50"
                                   >
                                     {saving === product.id ? '...' : 'Save'}
                                   </button>
@@ -390,7 +390,7 @@ export default function AdminPage() {
                             
                             {/* Expanded Row for Image & Description Upload */}
                             {expandedRow === product.id && (
-                              <tr className="bg-amber-50/30 border-b border-gray-100">
+                              <tr className="bg-white/30 border-b border-gray-100">
                                 <td colSpan={6} className="px-8 py-6">
                                   <div className="grid md:grid-cols-2 gap-8">
                                     <div>
@@ -402,14 +402,14 @@ export default function AdminPage() {
                                           ...prev,
                                           [product.id]: { ...getItem(product.id), description: e.target.value }
                                         }))}
-                                        className="w-full border border-gray-300 rounded-lg p-3 text-sm focus:outline-none focus:border-amber-500"
+                                        className="w-full border border-gray-300 rounded-sm p-3 text-sm focus:outline-none focus:border-slate-400"
                                       />
                                       <p className="text-xs text-gray-500 mt-2">This overrides the default description shown on the shop page.</p>
                                     </div>
                                     <div>
                                       <label className="block text-sm font-bold text-gray-700 mb-2">Product Photo</label>
                                       <div className="flex items-start gap-4">
-                                        <div className="w-24 h-24 border border-gray-200 rounded-lg overflow-hidden flex-shrink-0 bg-white flex items-center justify-center">
+                                        <div className="w-24 h-24 border border-gray-200 rounded-sm overflow-hidden flex-shrink-0 bg-white flex items-center justify-center">
                                           {displayImage === '/images/placeholder-board.jpg' ? (
                                             <ImageIcon className="w-8 h-8 text-gray-300" />
                                           ) : (
@@ -421,7 +421,7 @@ export default function AdminPage() {
                                             type="file" 
                                             accept="image/*"
                                             onChange={(e) => handleImageUpload(e, product.id)}
-                                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-amber-50 file:text-amber-700 hover:file:bg-amber-100 cursor-pointer"
+                                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-white file:text-slate-600 hover:file:bg-slate-50 cursor-pointer"
                                           />
                                           <p className="text-xs text-gray-500 mt-2">Upload a photo from your phone or computer. The image will be compressed automatically before saving.</p>
                                         </div>
