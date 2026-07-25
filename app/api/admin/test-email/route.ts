@@ -21,14 +21,14 @@ export async function POST() {
 
     const result = await sendOrderNotification(orderData)
     
-    // Test customer confirmation — send to Scott's email so he can preview it
+    // Test customer confirmation
     await sendCustomerConfirmation({
       ...orderData,
-      customerEmail: 'sherkelman@gmail.com', // Override to send the preview to you
-      customerName: 'Scott Herkelman'
+      customerEmail: 'Herkelmanwilliam@gmail.com', // Override to send the preview to him
+      customerName: 'William Herkelman'
     })
 
-    return NextResponse.json({ ok: true, message: 'Both test emails sent! Check sherkelman@gmail.com for the customer confirmation preview.', data: result })
+    return NextResponse.json({ ok: true, message: 'Both test emails sent! Check Herkelmanwilliam@gmail.com for the customer confirmation preview.', data: result })
   } catch (err: any) {
     console.error('Test email error:', err)
     return NextResponse.json({ ok: false, error: err.message }, { status: 500 })

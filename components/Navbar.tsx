@@ -38,9 +38,7 @@ export default function Navbar() {
             </div>
 
             <Link href="/" className="flex justify-center w-auto md:w-1/3">
-              <span className="text-3xl text-[#0f172a] tracking-[0.1em] font-serif">
-                Herk's Boards
-              </span>
+              <img src="/images/logo.jpg" alt="Herk's Boards" className="h-16 w-auto object-contain mix-blend-multiply" />
             </Link>
 
             <div className="hidden md:flex items-center justify-end gap-10 w-1/3">

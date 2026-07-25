@@ -6,7 +6,7 @@ function getResend(): Resend {
   return new Resend(key)
 }
 
-const NOTIFY_EMAILS = ['sherkelman@gmail.com'] // Update this to his actual email later
+const NOTIFY_EMAILS = ['Herkelmanwilliam@gmail.com']
 
 interface OrderItem {
   name: string

@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     
     await resend.emails.send({
       from: 'Herk\'s Boards <orders@herksboards.com>',
-      to: ['info@herksboards.com', 'sherkelman@gmail.com'],
+      to: ['Herkelmanwilliam@gmail.com'],
       subject: `New Custom Build Request from ${name}`,
       text: `
 Name: ${name}
