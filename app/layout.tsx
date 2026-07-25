@@ -19,18 +19,11 @@ export const metadata: Metadata = {
     siteName: 'Herk\'s Boards',
     locale: 'en_US',
     type: 'website',
-    images: [{
-      url: 'https://www.herksboards.com/og-image.jpg',
-      width: 1200,
-      height: 630,
-      alt: 'Herk\'s Boards Custom Woodworking',
-    }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Herk\'s Boards | Custom Woodworking',
     description: 'Handcrafted cutting boards, custom woodworking, and decorative wooden plaques.',
-    images: ['https://www.herksboards.com/og-image.jpg'],
   },
 }
 
@@ -44,8 +37,6 @@ export default function RootLayout({
     '@type': 'LocalBusiness',
     name: 'Herk\'s Boards',
     url: 'https://www.herksboards.com',
-    logo: 'https://www.herksboards.com/images/logo.png',
-    image: 'https://www.herksboards.com/images/og-image.jpg',
     description: 'Handcrafted cutting boards, custom woodworking, and decorative wooden plaques.',
     priceRange: '$$',
     sameAs: ['https://www.instagram.com/herksboards/'],
