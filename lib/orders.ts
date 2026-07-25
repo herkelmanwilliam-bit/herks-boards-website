@@ -22,6 +22,7 @@ export interface Order {
   customerName: string
   customerEmail: string
   address: string
+  notes?: string
   internalNotes: string
   items: OrderItem[]
   total: number // cents
