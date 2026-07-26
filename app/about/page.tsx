@@ -25,18 +25,30 @@ export default function AboutPage() {
 
       {/* Our Story */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="max-w-4xl mx-auto text-center">
           <div className="text-slate-600 font-bold text-sm uppercase tracking-wide mb-3">Our Story</div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-[#0f172a] mb-6">About Herk's Boards</h2>
-          <div className="space-y-4 text-[#0f172a]/70 leading-relaxed text-lg text-left">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[#0f172a] mb-12">About Herk's Boards</h2>
+          <div className="space-y-6 text-[#0f172a]/80 leading-relaxed text-lg text-left">
             <p>
-              Herk's Boards was established in 2024 to bring high-quality, handcrafted cutting boards and decorative wooden plaques to homes across the country.
+              Herk’s Boards was born in the fall of 2024 after Bill and Abby Herkelman were gifted a few woodworking tools by Bill’s parents. What they intended as a thoughtful gift quickly turned into a full-blown woodworking addiction. Thanks, Mom and Dad.
             </p>
             <p>
-              Operating out of Iowa, every piece is made by hand with meticulous attention to detail. Whether it's a solid Walnut edge-grain board for your kitchen, an Iowa State university plaque for your wall, or a custom build tailored precisely to your dimensions, we take pride in using premium hardwoods and food-safe finishes.
+              Armed with Bill’s uncanny ability to turn a random idea into a finished project and Abby’s slightly concerning obsession with cutting boards, Herk’s Boards officially came to life.
             </p>
             <p>
-              We believe a cutting board shouldn't just be a kitchen tool—it should be a piece of functional art that you're proud to leave out on the counter.
+              By day, we’re both law enforcement officers. By night (and most weekends), we’re usually covered in sawdust, debating wood species, and convincing ourselves that buying another tool is absolutely necessary. We also share our home with six dogs, which means there’s a good chance at least one piece of every project has been quality inspected by a canine supervisor.
+            </p>
+            <p>
+              We love being outdoors, creating things together, and taking on new challenges. Sometimes we build what our customers dream up. Sometimes we build whatever weird idea pops into our heads at 10 p.m. Both approaches have worked out surprisingly well.
+            </p>
+            <p>
+              In the summer of 2025, we built our own woodworking shop and dramatically expanded our tool collection. Some people might call it an investment. Others might call it a problem. We prefer the term “growth.”
+            </p>
+            <p>
+              No matter what we’re making, quality is our top priority. We want every customer to open their order and think, “This is even better than I hoped.” Whether you’re looking for a handcrafted cutting board, a custom piece, or an idea that seems a little crazy, we’d love the opportunity to create something you’ll love.
+            </p>
+            <p className="font-semibold text-center mt-12 pt-8 text-slate-500 italic">
+              Thanks for supporting our small business—and for helping justify all those tool purchases.
             </p>
           </div>
         </div>
