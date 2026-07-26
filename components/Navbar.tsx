@@ -19,7 +19,7 @@ export default function Navbar() {
       <div className="bg-[#0f172a] text-slate-400 text-[10px] tracking-[0.3em] font-medium py-2 px-6 flex justify-between items-center border-b border-slate-800">
         <div>IOWA, USA • CRAFTED BY HAND</div>
         <div className="hidden sm:flex items-center gap-6">
-          <a href="mailto:info@herksboards.com" className="hover:text-white transition-colors">INFO@HERKSBOARDS.COM</a>
+          <a href="mailto:Herkelmanwilliam@gmail.com" className="hover:text-white transition-colors">HERKELMANWILLIAM@GMAIL.COM</a>
           <a href="https://instagram.com/herksboards" target="_blank" className="hover:text-white transition-colors flex items-center gap-1.5"><Instagram className="w-3 h-3" /> FOLLOW US</a>
         </div>
       </div>
@@ -83,7 +83,7 @@ export default function Navbar() {
                 {l.label}
               </Link>
             ))}
-            <a href="mailto:info@herksboards.com" className="block text-slate-400 text-xs font-bold tracking-[0.2em] pt-6 border-t border-slate-100">
+            <a href="mailto:Herkelmanwilliam@gmail.com" className="block text-slate-400 text-xs font-bold tracking-[0.2em] pt-6 border-t border-slate-100">
               CONTACT US
             </a>
           </div>

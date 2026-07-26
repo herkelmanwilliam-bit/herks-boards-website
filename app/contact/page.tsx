@@ -51,8 +51,8 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <div className="font-serif text-xl text-[#0f172a] mb-1">Email</div>
-                  <a href="mailto:info@herksboards.com" className="text-slate-500 font-light tracking-wider hover:text-[#0f172a] text-sm transition-colors">
-                    INFO@HERKSBOARDS.COM
+                  <a href="mailto:Herkelmanwilliam@gmail.com" className="text-slate-500 font-light tracking-wider hover:text-[#0f172a] text-sm transition-colors">
+                    HERKELMANWILLIAM@GMAIL.COM
                   </a>
                 </div>
               </div>

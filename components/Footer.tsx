@@ -28,7 +28,7 @@ export default function Footer() {
             <h5 className="text-[#0f172a] text-[10px] tracking-[0.3em] font-bold mb-6 uppercase">Connect</h5>
             <ul className="space-y-4 text-sm font-light text-slate-500">
               <li><a href="https://instagram.com/herksboards" target="_blank" className="hover:text-[#0f172a] transition-colors">Instagram</a></li>
-              <li><a href="mailto:info@herksboards.com" className="hover:text-[#0f172a] transition-colors">Email Us</a></li>
+              <li><a href="mailto:Herkelmanwilliam@gmail.com" className="hover:text-[#0f172a] transition-colors">Email Us</a></li>
             </ul>
           </div>
 

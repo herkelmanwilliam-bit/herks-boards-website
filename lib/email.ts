@@ -173,7 +173,7 @@ export async function sendCustomerConfirmation(params: OrderNotificationParams) 
       </div>
 
       <div style="background:#f9fafb;border-radius:8px;padding:16px 20px;margin-bottom:8px;">
-        <p style="font-size:14px;color:#555;margin:0;">Questions about your order? Reply to this email or contact us at <a href="mailto:info@herksboards.com" style="color:#b45309;">info@herksboards.com</a></p>
+        <p style="font-size:14px;color:#555;margin:0;">Questions about your order? Reply to this email or contact us at <a href="mailto:Herkelmanwilliam@gmail.com" style="color:#b45309;">Herkelmanwilliam@gmail.com</a></p>
       </div>
     </div>
   </div>

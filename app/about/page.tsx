@@ -30,22 +30,22 @@ export default function AboutPage() {
           <h2 className="text-3xl sm:text-4xl font-bold text-[#0f172a] mb-12">About Herk's Boards</h2>
           <div className="space-y-6 text-[#0f172a]/80 leading-relaxed text-lg text-left">
             <p>
-              Herk’s Boards was born in the fall of 2024 after Bill and Abby Herkelman were gifted a few woodworking tools by Bill’s parents. What they intended as a thoughtful gift quickly turned into a full-blown woodworking addiction. Thanks, Mom and Dad.
+              Herk&apos;s Boards was born in the fall of 2024 after Bill and Abby Herkelman were gifted a few woodworking tools by Bill&apos;s parents. What they intended as a thoughtful gift quickly turned into a full-blown woodworking addiction. Thanks, Mom and Dad.
             </p>
             <p>
-              Armed with Bill’s uncanny ability to turn a random idea into a finished project and Abby’s slightly concerning obsession with cutting boards, Herk’s Boards officially came to life.
+              Armed with Bill&apos;s uncanny ability to turn a random idea into a finished project and Abby&apos;s slightly concerning obsession with cutting boards, Herk&apos;s Boards officially came to life.
             </p>
             <p>
-              By day, we’re both law enforcement officers. By night (and most weekends), we’re usually covered in sawdust, debating wood species, and convincing ourselves that buying another tool is absolutely necessary. We also share our home with six dogs, which means there’s a good chance at least one piece of every project has been quality inspected by a canine supervisor.
+              By day, we&apos;re both law enforcement officers. By night (and most weekends), we&apos;re usually covered in sawdust, debating wood species, and convincing ourselves that buying another tool is absolutely necessary. We also share our home with six dogs, which means there&apos;s a good chance at least one piece of every project has been quality inspected by a canine supervisor.
             </p>
             <p>
               We love being outdoors, creating things together, and taking on new challenges. Sometimes we build what our customers dream up. Sometimes we build whatever weird idea pops into our heads at 10 p.m. Both approaches have worked out surprisingly well.
             </p>
             <p>
-              In the summer of 2025, we built our own woodworking shop and dramatically expanded our tool collection. Some people might call it an investment. Others might call it a problem. We prefer the term “growth.”
+              In the summer of 2025, we built our own woodworking shop and dramatically expanded our tool collection. Some people might call it an investment. Others might call it a problem. We prefer the term &quot;growth.&quot;
             </p>
             <p>
-              No matter what we’re making, quality is our top priority. We want every customer to open their order and think, “This is even better than I hoped.” Whether you’re looking for a handcrafted cutting board, a custom piece, or an idea that seems a little crazy, we’d love the opportunity to create something you’ll love.
+              No matter what we&apos;re making, quality is our top priority. We want every customer to open their order and think, &quot;This is even better than I hoped.&quot; Whether you&apos;re looking for a handcrafted cutting board, a custom piece, or an idea that seems a little crazy, we&apos;d love the opportunity to create something you&apos;ll love.
             </p>
             <p className="font-semibold text-center mt-12 pt-8 text-slate-500 italic">
               Thanks for supporting our small business—and for helping justify all those tool purchases.
