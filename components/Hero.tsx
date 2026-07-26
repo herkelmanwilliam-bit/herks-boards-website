@@ -13,9 +13,9 @@ export default function Hero() {
             </span>
           </div>
           <h1 className="text-5xl sm:text-6xl lg:text-7xl font-serif text-[#0f172a] leading-[1.1] mb-8">
-            Precision.<br />
+            Passion.<br />
             Patience.<br />
-            <span className="italic text-slate-500 font-light">Perfection.</span>
+            <span className="italic text-slate-500 font-light">Precision.</span>
           </h1>
           <p className="text-lg text-slate-600 font-light leading-relaxed max-w-md mb-12">
             Heirloom-quality edge-grain cutting boards, bespoke decorative plaques, and custom commissions forged by hand in Iowa. Built to endure generations of use.
