@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight, Hammer } from 'lucide-react'
 
 export const metadata = {
@@ -32,18 +33,54 @@ export default function AboutPage() {
             <p>
               Herk&apos;s Boards was born in the fall of 2024 after Bill and Abby Herkelman were gifted a few woodworking tools by Bill&apos;s parents. What they intended as a thoughtful gift quickly turned into a full-blown woodworking addiction. Thanks, Mom and Dad.
             </p>
+
+            <Image 
+              src="/images/about/workshop-1.jpg" 
+              alt="The start of Herk's Boards" 
+              width={900} 
+              height={600} 
+              className="w-full h-auto rounded-xl shadow-md my-8 object-cover"
+            />
+
             <p>
               Armed with Bill&apos;s uncanny ability to turn a random idea into a finished project and Abby&apos;s slightly concerning obsession with cutting boards, Herk&apos;s Boards officially came to life.
             </p>
             <p>
               By day, we&apos;re both law enforcement officers. By night (and most weekends), we&apos;re usually covered in sawdust, debating wood species, and convincing ourselves that buying another tool is absolutely necessary. We also share our home with six dogs, which means there&apos;s a good chance at least one piece of every project has been quality inspected by a canine supervisor.
             </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+              <Image 
+                src="/images/about/workshop-2.jpg" 
+                alt="Working in the shop" 
+                width={450} 
+                height={450} 
+                className="w-full h-64 md:h-80 object-cover rounded-xl shadow-md"
+              />
+              <Image 
+                src="/images/about/workshop-3.jpg" 
+                alt="Detailed woodworking" 
+                width={450} 
+                height={450} 
+                className="w-full h-64 md:h-80 object-cover rounded-xl shadow-md"
+              />
+            </div>
+
             <p>
               We love being outdoors, creating things together, and taking on new challenges. Sometimes we build what our customers dream up. Sometimes we build whatever weird idea pops into our heads at 10 p.m. Both approaches have worked out surprisingly well.
             </p>
             <p>
               In the summer of 2025, we built our own woodworking shop and dramatically expanded our tool collection. Some people might call it an investment. Others might call it a problem. We prefer the term &quot;growth.&quot;
             </p>
+
+            <Image 
+              src="/images/about/workshop-4.jpg" 
+              alt="The new woodworking shop" 
+              width={900} 
+              height={600} 
+              className="w-full h-auto rounded-xl shadow-md my-8 object-cover"
+            />
+
             <p>
               No matter what we&apos;re making, quality is our top priority. We want every customer to open their order and think, &quot;This is even better than I hoped.&quot; Whether you&apos;re looking for a handcrafted cutting board, a custom piece, or an idea that seems a little crazy, we&apos;d love the opportunity to create something you&apos;ll love.
             </p>

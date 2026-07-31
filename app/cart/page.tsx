@@ -8,6 +8,10 @@ import { useState } from 'react'
 export default function CartPage() {
   const { items, removeItem, updateQuantity, total } = useCart()
   const [isCheckingOut, setIsCheckingOut] = useState(false)
+  const [zipCode, setZipCode] = useState('')
+  const [isCalculatingShipping, setIsCalculatingShipping] = useState(false)
+  const [shippingOptions, setShippingOptions] = useState<{name: string, price: number}[]>([])
+  const [selectedShipping, setSelectedShipping] = useState<number>(0)
 
   const handleCheckout = async () => {
     setIsCheckingOut(true)
@@ -27,6 +31,29 @@ export default function CartPage() {
     } catch (err) {
       console.error(err)
       setIsCheckingOut(false)
+    }
+  }
+
+  const calculateShipping = async () => {
+    if (!zipCode) return
+    setIsCalculatingShipping(true)
+    try {
+      const res = await fetch('/api/shipping', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ zipCode, items })
+      })
+      const data = await res.json()
+      if (data.options) {
+        setShippingOptions(data.options)
+        if (data.options.length > 0) {
+          setSelectedShipping(data.options[0].price)
+        }
+      }
+    } catch (err) {
+      console.error('Failed to calculate shipping:', err)
+    } finally {
+      setIsCalculatingShipping(false)
     }
   }
 
@@ -105,13 +132,50 @@ export default function CartPage() {
               </div>
               <div className="flex justify-between text-sm">
                 <span className="text-slate-500 font-light">Shipping</span>
-                <span className="text-slate-400 text-xs tracking-wider">Calculated at checkout</span>
+                <span className="font-bold text-[#0f172a] tracking-wider">{selectedShipping > 0 ? `$${selectedShipping.toFixed(2)}` : 'Calculated at checkout'}</span>
               </div>
+            </div>
+
+            <div className="border-t border-slate-200 pt-6 mb-8">
+              <h3 className="text-xs tracking-[0.2em] font-bold text-slate-400 mb-4">ESTIMATE SHIPPING</h3>
+              <div className="flex gap-2">
+                <input 
+                  type="text" 
+                  placeholder="ZIP Code" 
+                  value={zipCode}
+                  onChange={(e) => setZipCode(e.target.value)}
+                  className="w-full border border-slate-300 px-3 py-2 text-sm focus:outline-none focus:border-slate-500"
+                />
+                <button 
+                  onClick={calculateShipping}
+                  disabled={isCalculatingShipping || !zipCode}
+                  className="bg-slate-200 px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-300 disabled:opacity-50 transition-colors"
+                >
+                  {isCalculatingShipping ? 'WAIT...' : 'CALCULATE'}
+                </button>
+              </div>
+              {shippingOptions.length > 0 && (
+                <div className="mt-4 space-y-3">
+                  {shippingOptions.map((opt, i) => (
+                    <label key={i} className="flex items-center gap-3 text-sm text-slate-600 cursor-pointer">
+                      <input 
+                        type="radio" 
+                        name="shippingOption" 
+                        checked={selectedShipping === opt.price} 
+                        onChange={() => setSelectedShipping(opt.price)}
+                        className="text-[#0f172a] focus:ring-[#0f172a]"
+                      />
+                      <span className="flex-1">{opt.name}</span>
+                      <span className="font-bold text-[#0f172a]">${opt.price.toFixed(2)}</span>
+                    </label>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="flex justify-between items-end border-t border-slate-200 pt-6 mb-8">
               <span className="text-xs tracking-[0.2em] font-bold text-slate-400">TOTAL</span>
-              <span className="font-serif text-3xl text-[#0f172a] tracking-wide">${total().toFixed(2)}</span>
+              <span className="font-serif text-3xl text-[#0f172a] tracking-wide">${(total() + selectedShipping).toFixed(2)}</span>
             </div>
             
             <button 
