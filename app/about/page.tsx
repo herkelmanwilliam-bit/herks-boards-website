@@ -73,14 +73,6 @@ export default function AboutPage() {
               In the summer of 2025, we built our own woodworking shop and dramatically expanded our tool collection. Some people might call it an investment. Others might call it a problem. We prefer the term &quot;growth.&quot;
             </p>
 
-            <Image 
-              src="/images/about/workshop-4.jpg" 
-              alt="The new woodworking shop" 
-              width={900} 
-              height={600} 
-              className="w-full h-auto rounded-xl shadow-md my-8 object-cover"
-            />
-
             <p>
               No matter what we&apos;re making, quality is our top priority. We want every customer to open their order and think, &quot;This is even better than I hoped.&quot; Whether you&apos;re looking for a handcrafted cutting board, a custom piece, or an idea that seems a little crazy, we&apos;d love the opportunity to create something you&apos;ll love.
             </p>
